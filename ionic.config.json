@@ -1,0 +1,7 @@
+{
+  "name": "VMG Display",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
