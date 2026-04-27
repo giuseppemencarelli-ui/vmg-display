@@ -1,3 +1,31 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="fabVisible">
+    <ion-fab-button>
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="setLayoutSize(1); $event.stopPropagation()" [class.active]="currentLayoutSize === 1" title="1 Slot">
+        <ion-icon name="square"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="setLayoutSize(2); $event.stopPropagation()" [class.active]="currentLayoutSize === 2" title="2 Slots">
+        <ion-icon name="apps"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="setLayoutSize(4); $event.stopPropagation()" [class.active]="currentLayoutSize === 4" title="4 Slots">
+        <ion-icon name="grid"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="setLayoutSize(6); $event.stopPropagation()" [class.active]="currentLayoutSize === 6" title="6 Slots">
+        <ion-icon name="albums"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="goTo('/settings'); $event.stopPropagation()">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="goTo('/operativa'); $event.stopPropagation()">
+        <ion-icon name="navigate-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="goTo('/home'); $event.stopPropagation()">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-app>

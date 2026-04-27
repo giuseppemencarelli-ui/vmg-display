@@ -1,0 +1,33 @@
+<ion-content>
+  <ion-list inset="true">
+    <ion-list-header>Aspetto</ion-list-header>
+
+    <ion-item>
+      <ion-label>Tema</ion-label>
+      <ion-select [(ngModel)]="settings.theme" (ionChange)="onSave()">
+        <ion-select-option value="battery">battery</ion-select-option>
+        <ion-select-option value="night">night</ion-select-option>
+        <ion-select-option value="device">device</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+    <ion-label>Lingua</ion-label>
+    <ion-select [(ngModel)]="settings.language" (ionChange)="onSave()">
+        <ion-select-option value="it">Italiano</ion-select-option>
+        <ion-select-option value="en">English</ion-select-option>
+    </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list inset="true">
+    <ion-list-header>Notifiche</ion-list-header>
+
+    <ion-item>
+      <ion-label>Notifiche push</ion-label>
+      <ion-toggle [(ngModel)]="dummynotifications"
+                  >
+      </ion-toggle>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

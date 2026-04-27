@@ -1,0 +1,28 @@
+<!-- home.page.html -->
+<ion-content [fullscreen]="true">
+  <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px; height: 100%;">
+    
+    <!-- Griglia dinamica basata su LayoutSize -->
+    <ng-container *ngIf="(gridColumns$ | async) as cols">
+      <ng-container *ngIf="(visibleSlots$ | async) as slots">
+        <div [style.display]="'grid'" 
+             [style.grid-template-columns]="'repeat(' + cols + ', 1fr)'" 
+             style="gap: 8px; flex: 1;">
+          
+          <div *ngFor="let slot of slots" class="dash-card">
+            <div class="dash-label">
+              {{ getMeasurandData(slot.measurandId)?.shortLabel }}
+            </div>
+            <div class="dash-value">
+              {{ getMeasurandValue(slot.measurandId) }}
+            </div>
+            <div class="dash-unit">
+              {{ getMeasurandData(slot.measurandId)?.unit }}
+            </div>
+          </div>
+
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ion-content>
