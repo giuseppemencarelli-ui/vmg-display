@@ -14,11 +14,14 @@ import * as ionIcons from 'ionicons/icons';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
   imports: [CommonModule, IonApp, IonRouterOutlet, IonFab, IonFabList, IonFabButton, IonIcon],
 })
 export class AppComponent {
-  @HostBinding('class') activeTheme: string = 'theme-light';
+  @HostBinding('class') activeTheme: string = 'theme-device';
+  @HostBinding('style.--app-font-family') activeFont: string = 'Orbitron';
   fabVisible: boolean = true;
+  fabSide: 'top' | 'start' = 'top'; // top per portrait, start (left) per landscape
   private fabHideTimer: any;
 
   get currentLayoutSize(): LayoutSize {
@@ -33,7 +36,10 @@ export class AppComponent {
     private settingsSvc: SettingsService
   ) {
       this.appState.state$.subscribe(state => {
+        console.log('AppComponent - State cambio:', { theme: state.settings.theme, fontFamily: state.settings.fontFamily });
         this.activeTheme = `theme-${state.settings.theme}`;
+        this.activeFont = state.settings.fontFamily;
+        console.log('AppComponent - activeFont aggiornato a:', this.activeFont);
       });
     addIcons(ionIcons);
     this.initializeApp();
@@ -44,6 +50,26 @@ export class AppComponent {
     // Questo è il momento perfetto: l'hardware è pronto e i permessi sono verificabili
     this.locationSvc.startTracking();
     this.startFabAutoHideTimer();
+    this.setupOrientationListener();
+  }
+
+  private setupOrientationListener(): void {
+    // Rilevamento orientamento
+    const mediaQuery = window.matchMedia('(orientation: landscape)');
+    
+    // Imposta il side iniziale
+    this.updateFabSide(mediaQuery.matches);
+    
+    // Ascolta i cambiamenti di orientamento
+    mediaQuery.addEventListener('change', (e) => {
+      this.updateFabSide(e.matches);
+    });
+  }
+
+  private updateFabSide(isLandscape: boolean): void {
+    // In landscape: apri a sinistra (start)
+    // In portrait: apri verso l'alto (top)
+    this.fabSide = isLandscape ? 'start' : 'top';
   }
 
   @HostListener('document:click')

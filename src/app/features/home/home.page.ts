@@ -1,12 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonFab, IonFabList, IonFabButton, IonIcon, IonPopover, IonList, IonItem, IonLabel } from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AppStateService } from '../../core/services/app-state-service';
+import { SettingsService } from '../../core/services/settings';
 import { menuOutline } from 'ionicons/icons';
-import { LayoutSize } from '../../core/models/dashboard.model';
+import { LayoutSize, LAYOUT_COLUMNS, Orientation, DEFAULT_SLOTS } from '../../core/models/dashboard.model';
 import { MEASURANDS, Measurand } from '../../core/models/measurand.model';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject, merge } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -14,30 +16,148 @@ import { map, Observable } from 'rxjs';
   styleUrls: ['home.page.scss'],
   imports: [
     AsyncPipe,
-    CommonModule,
-    IonHeader, IonToolbar, IonTitle, IonContent,
-    IonFab, IonFabButton, IonIcon,
-    IonPopover, IonList, IonItem, IonLabel
+    CommonModule,IonContent
   ],
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
   private appStateSvc = inject(AppStateService);
+  private settingsSvc = inject(SettingsService);
   private router = inject(Router);
   readonly MEASURANDS = MEASURANDS;
 
+  private destroy$ = new Subject<void>();
+  private orientationChange$ = new Subject<Orientation>();
+
+  // Variabili per gestire lo swipe
+  private touchStartX: number = 0;
+  private touchStartY: number = 0;
+  private readonly SWIPE_THRESHOLD = 50; // pixel minimi per considerarlo uno swipe
+  private readonly LAYOUT_ORDER: LayoutSize[] = [1, 2, 4, 6];
+
   state$ = this.appStateSvc.state$;
 
-  gridColumns$ = this.state$.pipe(
-    map(state => {
-      const layout = state?.settings?.dashboardConfig?.layout as LayoutSize;
-      const layoutMap: Record<LayoutSize, number> = { 1: 1, 2: 2, 4: 2, 6: 3 };
-      return layoutMap[layout] || 2;
+  gridColumns$ = merge(
+    this.state$,
+    this.orientationChange$
+  ).pipe(
+    map(() => {
+      const layout = this.getCurrentLayout();
+      const orientation = this.getCurrentOrientation();
+      return LAYOUT_COLUMNS[orientation][layout] || 2;
     })
   );
 
   visibleSlots$ = this.state$.pipe(
     map(state => state?.settings?.dashboardConfig?.slots || [])
   );
+
+  styleVersion$ = this.state$.pipe(
+    map(state => state?.settings?.styleVersion || 'versione4')
+  );
+
+  ngOnInit(): void {
+    // Ascolta cambiamenti di orientamento
+    const mediaQuery = window.matchMedia('(orientation: landscape)');
+    
+    // Gestisci il cambio di orientamento
+    mediaQuery.addEventListener('change', (e) => {
+      const orientation: Orientation = e.matches ? 'landscape' : 'portrait';
+      console.log('Orientation changed:', orientation);
+      this.orientationChange$.next(orientation);
+    });
+
+    // Emetti l'orientamento iniziale
+    const initialOrientation: Orientation = mediaQuery.matches ? 'landscape' : 'portrait';
+    this.orientationChange$.next(initialOrientation);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.orientationChange$.complete();
+  }
+
+  private getCurrentLayout(): LayoutSize {
+    let layout: LayoutSize = 4; // default
+    this.state$.pipe(takeUntil(this.destroy$)).subscribe(state => {
+      layout = state?.settings?.dashboardConfig?.layout as LayoutSize;
+    });
+    return layout;
+  }
+
+  private getCurrentOrientation(): Orientation {
+    return window.matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait';
+  }
+
+  getContainerPadding(): number {
+    return this.getCurrentOrientation() === 'landscape' ? 8 : 12;
+  }
+
+  getContainerGap(): number {
+    return this.getCurrentOrientation() === 'landscape' ? 4 : 8;
+  }
+
+  getGridGap(): number {
+    return this.getCurrentOrientation() === 'landscape' ? 4 : 8;
+  }
+
+  onTouchStart(e: TouchEvent): void {
+    this.touchStartX = e.touches[0].clientX;
+    this.touchStartY = e.touches[0].clientY;
+  }
+
+  onTouchEnd(e: TouchEvent): void {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+
+    const deltaX = touchEndX - this.touchStartX;
+    const deltaY = touchEndY - this.touchStartY;
+
+    // Ignora se lo swipe è verticale
+    if (Math.abs(deltaY) > Math.abs(deltaX)) {
+      return;
+    }
+
+    // Swipe orizzontale
+    if (Math.abs(deltaX) > this.SWIPE_THRESHOLD) {
+      if (deltaX > 0) {
+        this.cycleLayoutPrevious(); // Swipe right → precedente
+      } else {
+        this.cycleLayoutNext(); // Swipe left → successivo
+      }
+    }
+  }
+
+  private cycleLayoutNext(): void {
+    const currentLayout = this.settingsSvc.currentSettings?.dashboardConfig?.layout as LayoutSize;
+    const currentIndex = this.LAYOUT_ORDER.indexOf(currentLayout);
+    const nextIndex = (currentIndex + 1) % this.LAYOUT_ORDER.length;
+    const nextLayout = this.LAYOUT_ORDER[nextIndex];
+    this.updateLayout(nextLayout);
+  }
+
+  private cycleLayoutPrevious(): void {
+    const currentLayout = this.settingsSvc.currentSettings?.dashboardConfig?.layout as LayoutSize;
+    const currentIndex = this.LAYOUT_ORDER.indexOf(currentLayout);
+    const prevIndex = (currentIndex - 1 + this.LAYOUT_ORDER.length) % this.LAYOUT_ORDER.length;
+    const prevLayout = this.LAYOUT_ORDER[prevIndex];
+    this.updateLayout(prevLayout);
+  }
+
+  private updateLayout(newLayout: LayoutSize): void {
+    const currentSettings = this.settingsSvc.currentSettings;
+    if (currentSettings) {
+      const updatedSettings = {
+        ...currentSettings,
+        dashboardConfig: {
+          layout: newLayout,
+          slots: DEFAULT_SLOTS[newLayout], // Usa gli slot corretti per il nuovo layout
+        },
+      };
+      this.settingsSvc.update(updatedSettings);
+      console.log('Layout changed to:', newLayout, 'with slots:', DEFAULT_SLOTS[newLayout]);
+    }
+  }
 
   getMeasurandData(measurandId: string): Measurand | undefined {
     return MEASURANDS[measurandId as keyof typeof MEASURANDS];
@@ -53,14 +173,23 @@ export class HomePage {
       wind_angle: '35',
       depth: '12.4',
       destination_dist: '8.3',
-      lat: '40° 42.3\' N',
-      lon: '14° 28.7\' E',
+      pos: '40° 42.3\' N $ 14° 28.7\' E',
       destination_eta: '2h 14m',
       hdg: '245',
       rpm: '1500',
       water_temp: '15.2'
     };
     return placeholders[measurandId] || '—';
+  }
+
+  isPositionType(measurandId: string): boolean {
+    const data = this.getMeasurandData(measurandId);
+    return data?.dataType === 'position';
+  }
+
+  getPositionLines(measurandId: string): string[] {
+    const value = this.getMeasurandValue(measurandId);
+    return value.split(' $ ');
   }
 
   goToSettings() {

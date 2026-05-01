@@ -6,11 +6,12 @@ export type DataType =
   | 'degrees'
   | 'degrees_sd'
   | 'position'
-  | 'time';
+  | 'time'
+  | 'clock';
 
 export type MeasurandId =
   | 'sog' | 'cog' | 'wind_speed' | 'wind_angle'
-  | 'depth' | 'lat' | 'lon' | 'destination_dist'
+  | 'depth' | 'pos' | 'destination_dist'
   | 'destination_eta' | 'hdg' | 'rpm' | 'water_temp';
 
 export interface Measurand {
@@ -28,8 +29,7 @@ export const MEASURANDS: Record<MeasurandId, Measurand> = {
   wind_speed:       { id: 'wind_speed',       label: 'Velocità vento',     shortLabel: 'AWS', unit: 'kn',  decimals: 1, dataType: 'number.float' },
   wind_angle:       { id: 'wind_angle',       label: 'Angolo vento',       shortLabel: 'AWA', unit: '°',   decimals: 0, dataType: 'degrees_sd'   },
   depth:            { id: 'depth',            label: 'Profondità',         shortLabel: 'DPT', unit: 'm',   decimals: 1, dataType: 'number.float' },
-  lat:              { id: 'lat',              label: 'Latitudine',         shortLabel: 'LAT', unit: '',    decimals: 4, dataType: 'position'     },
-  lon:              { id: 'lon',              label: 'Longitudine',        shortLabel: 'LON', unit: '',    decimals: 4, dataType: 'position'     },
+  pos:              { id: 'pos',              label: 'Posizione',          shortLabel: 'POS', unit: '',    decimals: 4, dataType: 'position'     },
   destination_dist: { id: 'destination_dist', label: 'Distanza dest.',     shortLabel: 'DTW', unit: 'nm',  decimals: 1, dataType: 'number.float' },
   destination_eta:  { id: 'destination_eta',  label: 'Tempo dest.',        shortLabel: 'ETA', unit: '',    decimals: 0, dataType: 'time'         },
   hdg:              { id: 'hdg',              label: 'Prua',               shortLabel: 'HDG', unit: '°',   decimals: 0, dataType: 'degrees'      },

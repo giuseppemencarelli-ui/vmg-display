@@ -1,21 +1,37 @@
 <!-- home.page.html -->
-<ion-content [fullscreen]="true">
-  <div style="padding: 16px; display: flex; flex-direction: column; gap: 8px; height: 100%;">
+<ion-content [fullscreen]="true" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+  <div [style.display]="'flex'" 
+       [style.flex-direction]="'column'" 
+       [style.gap.px]="getContainerGap()"
+       [style.height]="'100%'"
+       [style.padding.px]="getContainerPadding()"
+       [ngClass]="'style-version-' + (styleVersion$ | async)">
     
-    <!-- Griglia dinamica basata su LayoutSize -->
+    <!-- Griglia dinamica basata su LayoutSize e Orientamento -->
     <ng-container *ngIf="(gridColumns$ | async) as cols">
       <ng-container *ngIf="(visibleSlots$ | async) as slots">
         <div [style.display]="'grid'" 
              [style.grid-template-columns]="'repeat(' + cols + ', 1fr)'" 
-             style="gap: 8px; flex: 1;">
+             [style.gap.px]="getGridGap()"
+             style="flex: 1;">
           
-          <div *ngFor="let slot of slots" class="dash-card">
+          <div *ngFor="let slot of slots" class="dash-card style-{{ slot.measurandId }}">
             <div class="dash-label">
               {{ getMeasurandData(slot.measurandId)?.shortLabel }}
             </div>
-            <div class="dash-value">
+            
+            <!-- Valore standard (una sola riga) -->
+            <div *ngIf="!isPositionType(slot.measurandId)" class="dash-value">
               {{ getMeasurandValue(slot.measurandId) }}
             </div>
+
+            <!-- Valore posizione (due righe) -->
+            <div *ngIf="isPositionType(slot.measurandId)" class="dash-value-position">
+              <div *ngFor="let line of getPositionLines(slot.measurandId)" class="position-line">
+                {{ line }}
+              </div>
+            </div>
+            
             <div class="dash-unit">
               {{ getMeasurandData(slot.measurandId)?.unit }}
             </div>

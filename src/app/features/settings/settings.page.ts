@@ -26,13 +26,19 @@ export class SettingsPage {
   // Copia locale per il binding con ngModel
   settings = { ...this.settingsSvc.currentSettings };
 
+  constructor() {
+    console.log('SettingsPage - fontFamily iniziale:', this.settings.fontFamily);
+  }
+
   ionViewWillEnter() {
     // Ricarica i settings quando la pagina viene visualizzata
     this.settings = { ...this.settingsSvc.currentSettings };
+    console.log('SettingsPage - ionViewWillEnter, fontFamily:', this.settings.fontFamily);
   }
 
   async onSave() {
     try {
+      console.log('SettingsPage - onSave, fontFamily:', this.settings.fontFamily);
       await this.settingsSvc.update(this.settings);
     } catch (err) {
       console.error('Errore salvataggio impostazioni', err);

@@ -35,3 +35,72 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Custom Themes */
+@import './theme/themes.scss';
+
+/* ============================================================================
+ * CUSTOM FONTS
+ * ============================================================================ */
+
+// Orbitron - Font Display (Primary)
+@font-face {
+  font-family: 'Orbitron';
+  src: url('assets/fonts/Orbitron/Orbitron-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+// JetBrains Mono - Font Monospace (Secondary)
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('assets/fonts/JetBrains_Mono/JetBrainsMono-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('assets/fonts/JetBrains_Mono/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================================================
+ * GLOBAL FONT SETTINGS
+ * ============================================================================ */
+
+:root {
+  --app-font-family: 'Orbitron', system-ui, -apple-system, sans-serif;
+}
+
+html,
+body,
+ion-app {
+  font-family: var(--app-font-family) !important;
+  font-feature-settings: "kern" 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Applicare il font a tutti gli elementi Ionic
+ion-header,
+ion-content,
+ion-footer,
+ion-title,
+ion-label,
+ion-button,
+ion-text,
+ion-card,
+ion-card-content,
+ion-item,
+ion-toolbar {
+  font-family: var(--app-font-family) !important;
+}
+
+// Anche al testo generico
+* {
+  font-family: inherit;
+}

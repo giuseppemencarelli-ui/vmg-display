@@ -1,26 +1,233 @@
 // home.page.scss
-.dash-card {
-  background: var(--ion-card-background);
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  border: 0.5px solid var(--ion-color-light-shade);
 
-  .dash-label {
-    font-size: 12px;
-    color: var(--ion-color-medium);
-    margin-bottom: 4px;
+// Layout container responsive
+ion-content {
+  @media (orientation: landscape) {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
   }
 
+  @media (orientation: portrait) {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+  }
+}
+
+.dash-card {
+  background: var(--ion-card-background);
+  padding: 12px;
+  text-align: center;
+  border: none;
+  
+  // Container query per font responsivo
+  container-type: size;
+  
+  // Flexbox per distribuire lo spazio verticale
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 120px;
+
+  @media (orientation: landscape) {
+    padding: 10px 8px;
+    min-height: 100px;
+  }
+
+  .dash-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ion-color-medium);
+    margin-bottom: 4px;
+    flex-shrink: 0;
+
+    @media (orientation: landscape) {
+      font-size: 10px;
+      margin-bottom: 2px;
+    }
+  }
+
+  // Valore standard (una sola riga)
   .dash-value {
-    font-size: 32px;
+    font-size: 18cqw;
     font-weight: 500;
-    line-height: 1;
+    line-height: 1.1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  // Valore posizione (due righe)
+  .dash-value-position {
+    font-size: 15cqw;
+    font-weight: 500;
+    line-height: 1.1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-width: 0;
+
+    .position-line {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
   }
 
   .dash-unit {
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 500;
     color: var(--ion-color-medium-shade);
     margin-top: 2px;
+    flex-shrink: 0;
+
+    @media (orientation: landscape) {
+      font-size: 9px;
+      margin-top: 1px;
+    }
+  }
+}
+
+// ============================================================================
+// VERSIONE 4 - MODERN (Bordo superiore spesso - PREDEFINITA)
+// ============================================================================
+.style-version-versione4 .dash-card {
+  border-radius: 0;
+  border-top: 4px solid var(--ion-color-primary);
+  border-bottom: 0.5px solid var(--ion-color-light-shade);
+  border-left: 0.5px solid var(--ion-color-light-shade);
+  border-right: 0.5px solid var(--ion-color-light-shade);
+}
+
+// ============================================================================
+// VERSIONE 3 - ROUNDED (Bordo sottile arrotondato)
+// ============================================================================
+.style-version-versione3 .dash-card {
+  border-radius: 12px;
+  border: 1.5px solid var(--ion-color-primary);
+}
+
+// ============================================================================
+// STILI PER SINGOLI MEASURANDS
+// ============================================================================
+
+// SOG - Velocità sul fondo (VERDE)
+.dash-card.style-sog {
+  border-top-color: #10b981;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #10b981;
+  }
+}
+
+// COG - Rotta sul fondo (AZZURRO)
+.dash-card.style-cog {
+  border-top-color: #0ea5e9;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #0ea5e9;
+  }
+}
+
+// WIND_SPEED - Velocità vento (GIALLO)
+.dash-card.style-wind_speed {
+  border-top-color: #eab308;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #eab308;
+  }
+}
+
+// WIND_ANGLE - Angolo vento (GIALLO CHIARO)
+.dash-card.style-wind_angle {
+  border-top-color: #facc15;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #facc15;
+  }
+}
+
+// DEPTH - Profondità (BLU SCURO)
+.dash-card.style-depth {
+  border-top-color: #3b82f6;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #3b82f6;
+  }
+}
+
+// POS - Posizione (VIOLA)
+.dash-card.style-pos {
+  border-top-color: #a855f7;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #a855f7;
+  }
+}
+
+// DESTINATION_DIST - Distanza destinazione (ARANCIONE)
+.dash-card.style-destination_dist {
+  border-top-color: #f97316;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #f97316;
+  }
+}
+
+// DESTINATION_ETA - Tempo destinazione (ROSSO)
+.dash-card.style-destination_eta {
+  border-top-color: #ef4444;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #ef4444;
+  }
+}
+
+// HDG - Prua (AZZURRO SCURO)
+.dash-card.style-hdg {
+  border-top-color: #1e40af;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #1e40af;
+  }
+}
+
+// RPM - Giri motore (GRIGIO)
+.dash-card.style-rpm {
+  border-top-color: #64748b;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #64748b;
+  }
+}
+
+// WATER_TEMP - Temperatura acqua (CIANO)
+.dash-card.style-water_temp {
+  border-top-color: #06b6d4;
+  
+  .dash-value,
+  .dash-value-position {
+    color: #06b6d4;
   }
 }

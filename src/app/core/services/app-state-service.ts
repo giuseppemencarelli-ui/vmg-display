@@ -44,7 +44,7 @@ constructor(
         map(([userPrefs, locationData/*, nmeaData,*/]) => {
         // Logica di fusione intelligente
         // ...
-        console.log('AppStateService - Nuovo stato calcolato', { userPrefs, locationData/*, nmeaData*/ });  
+        console.log('AppStateService - Nuovo stato calcolato', { userPrefs, locationData/*, nmeaData*/, fontFamily: userPrefs.fontFamily });  
 
         
         return {

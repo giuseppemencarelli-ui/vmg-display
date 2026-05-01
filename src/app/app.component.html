@@ -1,10 +1,12 @@
-<ion-app>
-  <ion-router-outlet></ion-router-outlet>
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="fabVisible">
+<ion-app class="safe-area-container">
+  <div class="safe-area-wrapper">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="fabVisible" class="safe-area-fab">
     <ion-fab-button>
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
+    <ion-fab-list [side]="fabSide">
       <ion-fab-button (click)="setLayoutSize(1); $event.stopPropagation()" [class.active]="currentLayoutSize === 1" title="1 Slot">
         <ion-icon name="square"></ion-icon>
       </ion-fab-button>

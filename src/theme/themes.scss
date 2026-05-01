@@ -1,0 +1,196 @@
+// Custom Themes
+// =============================================================================
+
+// TEMA: DEVICE (segue il sistema operativo)
+app-root.theme-device {
+  color-scheme: light dark;
+  
+  // Light mode
+  @media (prefers-color-scheme: light) {
+    // Colori Ionic standard light
+    --ion-color-primary: #3880ff;
+    --ion-color-primary-rgb: 56, 128, 255;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #3171e0;
+    --ion-color-primary-tint: #4c8dff;
+
+    --ion-color-secondary: #3dc9f8;
+    --ion-color-secondary-rgb: 61, 201, 248;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #36abe0;
+    --ion-color-secondary-tint: #50d8ff;
+
+    --ion-background-color: #ffffff;
+    --ion-background-color-rgb: 255, 255, 255;
+
+    --ion-text-color: #000000;
+    --ion-text-color-rgb: 0, 0, 0;
+
+    --ion-card-background: #f4f5f8;
+    --ion-card-background-rgb: 244, 245, 248;
+
+    --ion-color-light: #f4f5f8;
+    --ion-color-light-rgb: 244, 245, 248;
+    --ion-color-light-contrast: #000000;
+    --ion-color-light-contrast-rgb: 0, 0, 0;
+    --ion-color-light-shade: #d7d8da;
+    --ion-color-light-tint: #f5f6fa;
+
+    --ion-color-medium: #989aa2;
+    --ion-color-medium-rgb: 152, 154, 162;
+    --ion-color-medium-contrast: #ffffff;
+    --ion-color-medium-contrast-rgb: 255, 255, 255;
+    --ion-color-medium-shade: #86888f;
+    --ion-color-medium-tint: #a2a4ab;
+
+    --ion-color-medium-shade: #424a51;
+    --ion-color-medium-shade-rgb: 66, 74, 81;
+  }
+
+  // Dark mode
+  @media (prefers-color-scheme: dark) {
+    --ion-color-primary: #428cff;
+    --ion-color-primary-rgb: 66, 140, 255;
+    --ion-color-primary-contrast: #000000;
+    --ion-color-primary-contrast-rgb: 0, 0, 0;
+    --ion-color-primary-shade: #3a7be5;
+    --ion-color-primary-tint: #5a96ff;
+
+    --ion-color-secondary: #50c8ff;
+    --ion-color-secondary-rgb: 80, 200, 255;
+    --ion-color-secondary-contrast: #000000;
+    --ion-color-secondary-contrast-rgb: 0, 0, 0;
+    --ion-color-secondary-shade: #48b0e0;
+    --ion-color-secondary-tint: #62d4ff;
+
+    --ion-background-color: #000000;
+    --ion-background-color-rgb: 0, 0, 0;
+
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+
+    --ion-card-background: #1c1c1d;
+    --ion-card-background-rgb: 28, 28, 29;
+
+    --ion-color-light: #222223;
+    --ion-color-light-rgb: 34, 34, 35;
+    --ion-color-light-contrast: #000000;
+    --ion-color-light-contrast-rgb: 0, 0, 0;
+    --ion-color-light-shade: #1e1e1f;
+    --ion-color-light-tint: #383838;
+
+    --ion-color-medium: #989aa2;
+    --ion-color-medium-rgb: 152, 154, 162;
+    --ion-color-medium-contrast: #000000;
+    --ion-color-medium-contrast-rgb: 0, 0, 0;
+    --ion-color-medium-shade: #86888f;
+    --ion-color-medium-tint: #a2a4ab;
+
+    --ion-color-medium-shade: #c7c7cc;
+    --ion-color-medium-shade-rgb: 199, 199, 204;
+  }
+}
+
+// TEMA: BATTERY (Ottimizzato per risparmio energetico - AMOLED Black)
+app-root.theme-battery {
+  color-scheme: dark;
+
+  --ion-color-primary: #1e90ff;
+  --ion-color-primary-rgb: 30, 144, 255;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #1a7ae0;
+  --ion-color-primary-tint: #3fa5ff;
+
+  --ion-color-secondary: #00d9ff;
+  --ion-color-secondary-rgb: 0, 217, 255;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0, 0, 0;
+  --ion-color-secondary-shade: #00c4de;
+  --ion-color-secondary-tint: #1addff;
+
+  // AMOLED Pure Black - Per massimo risparmio energetico
+  --ion-background-color: #000000;
+  --ion-background-color-rgb: 0, 0, 0;
+
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+
+  // Card leggermente più scure del background
+  --ion-card-background: #0a0a0a;
+  --ion-card-background-rgb: 10, 10, 10;
+
+  --ion-color-light: #0f0f0f;
+  --ion-color-light-rgb: 15, 15, 15;
+  --ion-color-light-contrast: #ffffff;
+  --ion-color-light-contrast-rgb: 255, 255, 255;
+  --ion-color-light-shade: #0d0d0d;
+  --ion-color-light-tint: #1a1a1a;
+
+  --ion-color-medium: #666666;
+  --ion-color-medium-rgb: 102, 102, 102;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #595959;
+  --ion-color-medium-tint: #717171;
+
+  --ion-color-medium-shade: #999999;
+  --ion-color-medium-shade-rgb: 153, 153, 153;
+
+  // Riduzione della luminosità globale
+  filter: brightness(0.95);
+}
+
+// TEMA: NIGHT (Solo colori rossi per visione notturna)
+app-root.theme-night {
+  color-scheme: dark;
+
+  // Rossi per visione notturna preservando la sensibilità dell'occhio
+  --ion-color-primary: #cc0000;
+  --ion-color-primary-rgb: 204, 0, 0;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #b30000;
+  --ion-color-primary-tint: #d61a1a;
+
+  --ion-color-secondary: #ff4444;
+  --ion-color-secondary-rgb: 255, 68, 68;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #e63d3d;
+  --ion-color-secondary-tint: #ff5757;
+
+  // Background quasi nero (dark gray per non affaticare)
+  --ion-background-color: #1a0000;
+  --ion-background-color-rgb: 26, 0, 0;
+
+  // Testo rosso scuro/burgundy per contrasto
+  --ion-text-color: #ff8888;
+  --ion-text-color-rgb: 255, 136, 136;
+
+  // Card ancora più scure
+  --ion-card-background: #330000;
+  --ion-card-background-rgb: 51, 0, 0;
+
+  --ion-color-light: #330000;
+  --ion-color-light-rgb: 51, 0, 0;
+  --ion-color-light-contrast: #ff8888;
+  --ion-color-light-contrast-rgb: 255, 136, 136;
+  --ion-color-light-shade: #220000;
+  --ion-color-light-tint: #4d0000;
+
+  --ion-color-medium: #cc3333;
+  --ion-color-medium-rgb: 204, 51, 51;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #b32d2d;
+  --ion-color-medium-tint: #d94d4d;
+
+  --ion-color-medium-shade: #ff6666;
+  --ion-color-medium-shade-rgb: 255, 102, 102;
+
+  // Filtro rosso per tutto
+  filter: saturate(1.5) hue-rotate(-15deg);
+}

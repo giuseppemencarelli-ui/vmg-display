@@ -2,6 +2,7 @@
 import { MeasurandId } from './measurand.model';
 
 export type LayoutSize = 1 | 2 | 4 | 6;
+export type Orientation = 'portrait' | 'landscape';
 
 export interface InstrumentSlot {
   position: number;
@@ -12,6 +13,23 @@ export interface DashboardConfig {
   layout: LayoutSize;
   slots: InstrumentSlot[];
 }
+
+// Mappa layout → colonne per orientamento
+// Formato: righe × colonne
+export const LAYOUT_COLUMNS: Record<Orientation, Record<LayoutSize, number>> = {
+  portrait: {
+    1: 1,   // 1x1
+    2: 1,   // 2x1
+    4: 1,   // 4x1
+    6: 1,   // 6x1
+  },
+  landscape: {
+    1: 1,   // 1x1
+    2: 2,   // 1x2
+    4: 2,   // 2x2
+    6: 3,   // 2x3
+  },
+};
 
 export const DEFAULT_SLOTS: Record<LayoutSize, InstrumentSlot[]> = {
   1: [
@@ -33,7 +51,7 @@ export const DEFAULT_SLOTS: Record<LayoutSize, InstrumentSlot[]> = {
     { position: 2, measurandId: 'wind_speed' },
     { position: 3, measurandId: 'wind_angle' },
     { position: 4, measurandId: 'depth' },
-    { position: 5, measurandId: 'destination_dist' },
+    { position: 5, measurandId: 'pos' },
   ],
 };
 

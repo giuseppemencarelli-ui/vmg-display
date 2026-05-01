@@ -10,12 +10,29 @@
         <ion-select-option value="device">device</ion-select-option>
       </ion-select>
     </ion-item>
+
     <ion-item>
-    <ion-label>Lingua</ion-label>
-    <ion-select [(ngModel)]="settings.language" (ionChange)="onSave()">
+      <ion-label>Lingua</ion-label>
+      <ion-select [(ngModel)]="settings.language" (ionChange)="onSave()">
         <ion-select-option value="it">Italiano</ion-select-option>
         <ion-select-option value="en">English</ion-select-option>
-    </ion-select>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Font</ion-label>
+      <ion-select [(ngModel)]="settings.fontFamily" (ionChange)="onSave()">
+        <ion-select-option value="Orbitron">Orbitron</ion-select-option>
+        <ion-select-option value="JetBrains Mono">JetBrains Mono</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Stile Dashboard</ion-label>
+      <ion-select [(ngModel)]="settings.styleVersion" (ionChange)="onSave()">
+        <ion-select-option value="versione3">Versione 3 (Rounded)</ion-select-option>
+        <ion-select-option value="versione4">Versione 4 (Modern)</ion-select-option>
+      </ion-select>
     </ion-item>
   </ion-list>
 
