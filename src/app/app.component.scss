@@ -22,8 +22,25 @@ ion-app {
   }
 }
 
+// Status Bar Component - sempre visibile in alto
+app-status-bar {
+  flex: 0 0 auto;
+}
+
+ion-router-outlet {
+  position: relative !important; 
+  flex: 1;
+  height: 100% !important;
+  border: solid 1px cyan !important; /* Per debug, da rimuovere */
+}
+
+
 // Wrapper del contenuto principale
 .safe-area-wrapper {
+  //Spazio per status bar (24px) + safe area top
+  top: 24px; 
+  height: calc(100% - 24px);
+
   flex: 1;
   display: flex;
   flex-direction: column;

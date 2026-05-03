@@ -22,6 +22,10 @@ ion-content {
   padding: 12px;
   text-align: center;
   border: none;
+  /*border: solid 1px red !important; /* Per debug, da rimuovere */
+
+  position: relative;
+  overflow: hidden;
   
   // Container query per font responsivo
   container-type: size;
@@ -39,29 +43,55 @@ ion-content {
   }
 
   .dash-label {
-    font-size: 11px;
+    /*position: absolute;
+    z-index: 2; /* Sopra al numero */
+    font-size: 15cqh;
     font-weight: 600;
     color: var(--ion-color-medium);
-    margin-bottom: 4px;
-    flex-shrink: 0;
+    /*margin-bottom: 4px; */
+
+    display: flex;
+    justify-content: space-between; /* Spinge i figli ai due estremi */
+    align-items: baseline;          /* Allinea il testo sulla linea di base */
+    width: 100%;
+
+    .label-text {
+      text-align: left;
+    }
+
+    .unit-text {
+      text-align: right;
+      /* Spesso le unità sono leggermente più piccole o meno opache 
+        per dare enfasi al nome della metrica */
+      font-size: 0.8em; 
+      opacity: 0.8;
+    }
+
+
 
     @media (orientation: landscape) {
-      font-size: 10px;
-      margin-bottom: 2px;
+      /*font-size: 10px;
+      margin-bottom: 2px;*/
     }
   }
 
   // Valore standard (una sola riga)
   .dash-value {
-    font-size: 18cqw;
+    /*position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);*/
+
+    container-type: size;
+    line-height: 1;
+    z-index: 1;
+    
+    font-size: 75cqmin;
     font-weight: 500;
-    line-height: 1.1;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-    word-break: break-word;
+    line-height: 1;
+    width: 100%;
+    height: 100%;
+    text-align: right;
   }
 
   // Valore posizione (due righe)
@@ -124,7 +154,7 @@ ion-content {
 
 // SOG - Velocità sul fondo (VERDE)
 .dash-card.style-sog {
-  border-top-color: #10b981;
+  border-top-color: #10b981 !important;
   
   .dash-value,
   .dash-value-position {
@@ -134,7 +164,7 @@ ion-content {
 
 // COG - Rotta sul fondo (AZZURRO)
 .dash-card.style-cog {
-  border-top-color: #0ea5e9;
+  border-top-color: #0ea5e9 !important;
   
   .dash-value,
   .dash-value-position {
@@ -144,7 +174,7 @@ ion-content {
 
 // WIND_SPEED - Velocità vento (GIALLO)
 .dash-card.style-wind_speed {
-  border-top-color: #eab308;
+  border-top-color: #eab308 !important;;
   
   .dash-value,
   .dash-value-position {
@@ -154,7 +184,7 @@ ion-content {
 
 // WIND_ANGLE - Angolo vento (GIALLO CHIARO)
 .dash-card.style-wind_angle {
-  border-top-color: #facc15;
+  border-top-color: #facc15 !important;
   
   .dash-value,
   .dash-value-position {
@@ -164,7 +194,7 @@ ion-content {
 
 // DEPTH - Profondità (BLU SCURO)
 .dash-card.style-depth {
-  border-top-color: #3b82f6;
+  border-top-color: #3b82f6 !important;
   
   .dash-value,
   .dash-value-position {
@@ -174,7 +204,7 @@ ion-content {
 
 // POS - Posizione (VIOLA)
 .dash-card.style-pos {
-  border-top-color: #a855f7;
+  border-top-color: #a855f7 !important;
   
   .dash-value,
   .dash-value-position {
@@ -184,7 +214,7 @@ ion-content {
 
 // DESTINATION_DIST - Distanza destinazione (ARANCIONE)
 .dash-card.style-destination_dist {
-  border-top-color: #f97316;
+  border-top-color: #f97316 !important;
   
   .dash-value,
   .dash-value-position {
@@ -194,7 +224,7 @@ ion-content {
 
 // DESTINATION_ETA - Tempo destinazione (ROSSO)
 .dash-card.style-destination_eta {
-  border-top-color: #ef4444;
+  border-top-color: #ef4444 !important;
   
   .dash-value,
   .dash-value-position {
@@ -204,7 +234,7 @@ ion-content {
 
 // HDG - Prua (AZZURRO SCURO)
 .dash-card.style-hdg {
-  border-top-color: #1e40af;
+  border-top-color: #1e40af !important;
   
   .dash-value,
   .dash-value-position {
@@ -214,7 +244,7 @@ ion-content {
 
 // RPM - Giri motore (GRIGIO)
 .dash-card.style-rpm {
-  border-top-color: #64748b;
+  border-top-color: #64748b !important;
   
   .dash-value,
   .dash-value-position {
@@ -224,7 +254,7 @@ ion-content {
 
 // WATER_TEMP - Temperatura acqua (CIANO)
 .dash-card.style-water_temp {
-  border-top-color: #06b6d4;
+  border-top-color: #06b6d4 !important;
   
   .dash-value,
   .dash-value-position {

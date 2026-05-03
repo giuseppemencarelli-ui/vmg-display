@@ -1,0 +1,99 @@
+<!-- Minimale (default) -->
+<div *ngIf="!isExpanded" 
+     class="status-bar status-bar-minimized"
+     (click)="onStatusBarClick()">
+  
+  <div class="status-content">
+    <!-- Ora -->
+    <span class="time">{{ currentTime$ | async }}</span>
+
+    <!-- Icone di stato -->
+    <div class="icons">
+      <ng-container *ngIf="status$ | async as status; else loadingMinimized">
+        <!-- GPS Status -->
+        <ion-icon 
+          [name]="getGpsIcon(status.gps)"
+          [class]="getGpsClass(status.gps)"
+          [title]="getGpsTooltip(status.gps)">
+        </ion-icon>
+
+        <!-- NMEA Status (se abilitato) -->
+        <ion-icon 
+          *ngIf="status.nmea.enabled"
+          name="wifi-outline"
+          [class]="getNmeaClass(status.nmea)"
+          [title]="getNmeaTooltip(status.nmea)">
+        </ion-icon>
+
+        <!-- Wearables Status (se abilitato) -->
+        <ion-icon 
+          *ngIf="status.wearables.enabled"
+          name="watch-outline"
+          [class]="getWearablesClass(status.wearables)"
+          [title]="getWearablesTooltip(status.wearables)">
+        </ion-icon>
+      </ng-container>
+      <ng-template #loadingMinimized>
+        <span style="font-size: 12px; color: var(--ion-color-medium-shade);">●</span>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<!-- Espanso (dettagliato) -->
+<div *ngIf="isExpanded && (status$ | async) as status" 
+     class="status-bar status-bar-expanded"
+     (click)="onStatusBarClick()">
+  
+  <div class="status-header">
+    <span class="time-large">{{ currentTime$ | async }}</span>
+  </div>
+
+  <div class="status-detail">
+    <!-- GPS Detail -->
+    <div class="status-item">
+      <ion-icon 
+        [name]="getGpsIcon(status.gps)"
+        [class]="getGpsClass(status.gps)">
+      </ion-icon>
+      <div class="status-info">
+        <span class="label">GPS</span>
+        <span class="value">
+          {{ status.gps.enabled ? (status.gps.hasFix ? 'Fix (' + status.gps.accuracy + 'm)' : 'Ricerca...') : 'Disabilitato' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- NMEA Detail (se abilitato) -->
+    <div *ngIf="status.nmea.enabled" class="status-item">
+      <ion-icon 
+        name="wifi-outline"
+        [class]="getNmeaClass(status.nmea)">
+      </ion-icon>
+      <div class="status-info">
+        <span class="label">NMEA</span>
+        <span class="value">
+          {{ status.nmea.isConnected ? 'Collegato' : 'Disconnesso' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Wearables Detail (se abilitato) -->
+    <div *ngIf="status.wearables.enabled" class="status-item">
+      <ion-icon 
+        name="watch-outline"
+        [class]="getWearablesClass(status.wearables)">
+      </ion-icon>
+      <div class="status-info">
+        <span class="label">Wearable</span>
+        <span class="value">
+          {{ status.wearables.isConnected ? 'Collegato' : 'Disconnesso' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-footer">
+    <small>Tocca per collassare</small>
+  </div>
+</div>

@@ -47,4 +47,23 @@
     </ion-item>
 
   </ion-list>
+
+  <ion-list inset="true">
+    <ion-list-header>Orario</ion-list-header>
+
+    <ion-item>
+      <ion-label>Formato Orario</ion-label>
+      <ion-select [(ngModel)]="settings.timeFormat" (ionChange)="onSave()">
+        <ion-select-option value="local">Locale (Dispositivo)</ion-select-option>
+        <ion-select-option value="utc">UTC</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mostra Secondi</ion-label>
+      <ion-toggle [(ngModel)]="settings.showSeconds" (ionChange)="onSave()">
+      </ion-toggle>
+    </ion-item>
+
+  </ion-list>
 </ion-content>

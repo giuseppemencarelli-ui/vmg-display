@@ -1,0 +1,259 @@
+// status-bar.component.scss
+
+// ============================================================================
+// STATUS BAR - MINIMIZED (Default)
+// ============================================================================
+.status-bar-minimized {
+  height: 24px;
+  background: var(--ion-color-medium);
+  border-bottom: 1px solid var(--ion-color-medium-shade);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+
+  .status-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .time {
+    font-weight: 600;
+    color: var(--ion-text-color);
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  .icons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+
+    ion-icon {
+      font-size: 14px;
+      transition: all 0.2s ease;
+
+      &.icon-active {
+        color: #10b981;
+        filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.6));
+      }
+
+      &.icon-searching {
+        color: #eab308;
+        animation: pulse-searching 1.5s ease-in-out infinite;
+      }
+
+      &.icon-inactive {
+        color: #ef4444;
+      }
+
+      &.icon-disabled {
+        color: var(--ion-color-medium-shade);
+        opacity: 0.5;
+      }
+    }
+  }
+
+  // Responsive
+  @media (orientation: landscape) {
+    height: 22px;
+    padding: 0 6px;
+
+    .status-content {
+      gap: 6px;
+    }
+
+    .time {
+      font-size: 11px;
+    }
+
+    .icons {
+      gap: 4px;
+
+      ion-icon {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// STATUS BAR - EXPANDED (Dettagliato)
+// ============================================================================
+.status-bar-expanded {
+  background: var(--ion-color-medium);
+  border-bottom: 2px solid var(--ion-color-primary);
+  padding: 12px 16px;
+  cursor: pointer;
+  animation: expandDown 0.3s ease-out;
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+
+  .status-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ion-color-medium-shade);
+
+    .time-large {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ion-color-primary);
+      font-family: 'JetBrains Mono', monospace;
+    }
+  }
+
+  .status-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      background: var(--ion-color-medium-shade);
+      border-radius: 6px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: var(--ion-color-light-shade);
+      }
+
+      ion-icon {
+        font-size: 20px;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+
+        &.icon-active {
+          color: #10b981;
+          filter: drop-shadow(0 0 3px rgba(16, 185, 129, 0.6));
+        }
+
+        &.icon-searching {
+          color: #eab308;
+          animation: pulse-searching 1.5s ease-in-out infinite;
+        }
+
+        &.icon-inactive {
+          color: #ef4444;
+        }
+
+        &.icon-disabled {
+          color: var(--ion-color-medium-shade);
+          opacity: 0.5;
+        }
+      }
+
+      .status-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 1;
+
+        .label {
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--ion-color-medium-shade);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .value {
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--ion-text-color);
+          font-family: 'JetBrains Mono', monospace;
+        }
+      }
+    }
+  }
+
+  .status-footer {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--ion-color-medium-shade);
+    text-align: center;
+    color: var(--ion-color-medium-shade);
+    font-size: 11px;
+    font-style: italic;
+  }
+
+  // Responsive
+  @media (orientation: landscape) {
+    padding: 10px 12px;
+    max-height: 80vh;
+
+    .status-header {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+
+      .time-large {
+        font-size: 16px;
+      }
+    }
+
+    .status-detail {
+      gap: 8px;
+      max-height: 150px;
+
+      .status-item {
+        padding: 6px;
+        gap: 10px;
+
+        ion-icon {
+          font-size: 18px;
+        }
+
+        .status-info {
+          .label {
+            font-size: 11px;
+          }
+
+          .value {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// ANIMATIONS
+// ============================================================================
+@keyframes expandDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 500px;
+  }
+}
+
+@keyframes pulse-searching {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

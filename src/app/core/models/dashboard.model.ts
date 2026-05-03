@@ -42,20 +42,20 @@ export const DEFAULT_SLOTS: Record<LayoutSize, InstrumentSlot[]> = {
   4: [
     { position: 0, measurandId: 'sog' },
     { position: 1, measurandId: 'cog' },
-    { position: 2, measurandId: 'wind_speed' },
-    { position: 3, measurandId: 'depth' },
+    { position: 2, measurandId: 'cdi' },
+    { position: 3, measurandId: 'vmg' },
   ],
   6: [
     { position: 0, measurandId: 'sog' },
     { position: 1, measurandId: 'cog' },
-    { position: 2, measurandId: 'wind_speed' },
-    { position: 3, measurandId: 'wind_angle' },
-    { position: 4, measurandId: 'depth' },
+    { position: 2, measurandId: 'pos' },
+    { position: 3, measurandId: 'cdi' },
+    { position: 4, measurandId: 'vmg' },
     { position: 5, measurandId: 'pos' },
   ],
 };
 
 export const DEFAULT_DASHBOARD_CONFIG: DashboardConfig = {
-  layout: 4,
-  slots: DEFAULT_SLOTS[4],
+  layout: 6,
+  slots: DEFAULT_SLOTS[6],
 };

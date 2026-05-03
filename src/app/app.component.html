@@ -1,7 +1,9 @@
 <ion-app class="safe-area-container">
-  <div class="safe-area-wrapper">
+  <!-- Status Bar: sempre visibile in alto -->
+  <app-status-bar></app-status-bar>
+  <!-- <div class="safe-area-wrapper"> -->
     <ion-router-outlet></ion-router-outlet>
-  </div>
+  <!-- </div> -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="fabVisible" class="safe-area-fab">
     <ion-fab-button>
       <ion-icon name="menu"></ion-icon>

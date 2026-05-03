@@ -1,10 +1,9 @@
 <!-- home.page.html -->
-<ion-content [fullscreen]="true" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+<ion-content [fullscreen]="true" scrollY="false" scrollX="false" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
   <div [style.display]="'flex'" 
        [style.flex-direction]="'column'" 
        [style.gap.px]="getContainerGap()"
        [style.height]="'100%'"
-       [style.padding.px]="getContainerPadding()"
        [ngClass]="'style-version-' + (styleVersion$ | async)">
     
     <!-- Griglia dinamica basata su LayoutSize e Orientamento -->
@@ -17,12 +16,16 @@
           
           <div *ngFor="let slot of slots" class="dash-card style-{{ slot.measurandId }}">
             <div class="dash-label">
-              {{ getMeasurandData(slot.measurandId)?.shortLabel }}
+              <span class="label-text"> 
+              {{ getMeasurandData(slot.measurandId)?.shortLabel }} </span>
+              <span class="unit-text">
+                {{ getMeasurandData(slot.measurandId)?.unit }}
+              </span> 
             </div>
             
             <!-- Valore standard (una sola riga) -->
             <div *ngIf="!isPositionType(slot.measurandId)" class="dash-value">
-              {{ getMeasurandValue(slot.measurandId) }}
+              <span fitText>{{ getMeasurandValue(slot.measurandId) }}</span>
             </div>
 
             <!-- Valore posizione (due righe) -->
@@ -32,9 +35,10 @@
               </div>
             </div>
             
+            <!--
             <div class="dash-unit">
               {{ getMeasurandData(slot.measurandId)?.unit }}
-            </div>
+            </div> -->
           </div>
 
         </div>

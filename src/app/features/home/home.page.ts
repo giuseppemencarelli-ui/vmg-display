@@ -7,8 +7,10 @@ import { SettingsService } from '../../core/services/settings';
 import { menuOutline } from 'ionicons/icons';
 import { LayoutSize, LAYOUT_COLUMNS, Orientation, DEFAULT_SLOTS } from '../../core/models/dashboard.model';
 import { MEASURANDS, Measurand } from '../../core/models/measurand.model';
+import { MeasurandValues, DEFAULT_MEASURAND_VALUES } from '../../core/models/settings.model';
 import { map, Observable, Subject, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FitTextDirective } from '../../directives/fit-text.directive';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +18,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['home.page.scss'],
   imports: [
     AsyncPipe,
+    FitTextDirective,
     CommonModule,IonContent
   ],
 })
@@ -33,6 +36,9 @@ export class HomePage implements OnInit, OnDestroy {
   private touchStartY: number = 0;
   private readonly SWIPE_THRESHOLD = 50; // pixel minimi per considerarlo uno swipe
   private readonly LAYOUT_ORDER: LayoutSize[] = [1, 2, 4, 6];
+
+  // Mantiene i valori correnti dei measurands (source of truth dallo state)
+  currentMeasurandValues: MeasurandValues = DEFAULT_MEASURAND_VALUES;
 
   state$ = this.appStateSvc.state$;
 
@@ -55,7 +61,19 @@ export class HomePage implements OnInit, OnDestroy {
     map(state => state?.settings?.styleVersion || 'versione4')
   );
 
+  // Observable per i valori dei measurand (source of truth dallo state)
+  measurandValues$ = this.state$.pipe(
+    map(state => state?.measurands || {})
+  );
+
   ngOnInit(): void {
+    // Sottoscrivi ai valori dei measurands dallo state
+    this.measurandValues$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(values => {
+        this.currentMeasurandValues = values;
+      });
+
     // Ascolta cambiamenti di orientamento
     const mediaQuery = window.matchMedia('(orientation: landscape)');
     
@@ -89,9 +107,9 @@ export class HomePage implements OnInit, OnDestroy {
     return window.matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait';
   }
 
-  getContainerPadding(): number {
+  /*getContainerPadding(): number {
     return this.getCurrentOrientation() === 'landscape' ? 8 : 12;
-  }
+  }*/
 
   getContainerGap(): number {
     return this.getCurrentOrientation() === 'landscape' ? 4 : 8;
@@ -164,22 +182,10 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   getMeasurandValue(measurandId: string): string {
-    // TODO: Implementare il collegamento con i dati NMEA reali
-    // Per ora mostra valori di placeholder
-    const placeholders: Record<string, string> = {
-      sog: '6.4',
-      cog: '247',
-      wind_speed: '18',
-      wind_angle: '35',
-      depth: '12.4',
-      destination_dist: '8.3',
-      pos: '40° 42.3\' N $ 14° 28.7\' E',
-      destination_eta: '2h 14m',
-      hdg: '245',
-      rpm: '1500',
-      water_temp: '15.2'
-    };
-    return placeholders[measurandId] || '—';
+    // Legge il valore dal state (source of truth)
+    // Se il measurandId non esiste nel currentMeasurandValues, ritorna "-"
+    const value = this.currentMeasurandValues[measurandId as keyof MeasurandValues];
+    return value || '—';
   }
 
   isPositionType(measurandId: string): boolean {

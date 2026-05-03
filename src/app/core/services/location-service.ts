@@ -7,6 +7,7 @@ export interface LocationData {
   lon: number;      //longitudine
   sog: number;      //speed over ground
   cog: number;      //course over ground  
+  accuracy: number; // precisione in metri
 }
 
 
@@ -21,7 +22,8 @@ export class LocationService {
     lat: 0.0,
     lon: 0.0,
     sog: 0.0,
-    cog: 0.0
+    cog: 0.0,
+    accuracy: -1
   };
   private locationData = new BehaviorSubject<LocationData>(this.initialData);
   public locationData$ = this.locationData.asObservable();
@@ -40,7 +42,8 @@ export class LocationService {
         lat: 45.0,
         lon: 9.0,
         sog: 5.5,
-        cog: 180.0
+        cog: 180.0,
+        accuracy: 5.0 
       });
     }, 5000);
   }

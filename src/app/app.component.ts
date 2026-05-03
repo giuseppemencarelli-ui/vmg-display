@@ -7,6 +7,7 @@ import { LocationService } from './core/services/location-service';
 import { AppStateService } from './core/services/app-state-service';
 import { SettingsService } from './core/services/settings';
 import { LayoutSize, DEFAULT_SLOTS } from './core/models/dashboard.model';
+import { StatusBarComponent } from './components/status-bar/status-bar.component';
 
 import { addIcons } from 'ionicons';
 import * as ionIcons from 'ionicons/icons';
@@ -15,7 +16,7 @@ import * as ionIcons from 'ionicons/icons';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [CommonModule, IonApp, IonRouterOutlet, IonFab, IonFabList, IonFabButton, IonIcon],
+  imports: [CommonModule, IonApp, IonRouterOutlet, IonFab, IonFabList, IonFabButton, IonIcon, StatusBarComponent],
 })
 export class AppComponent {
   @HostBinding('class') activeTheme: string = 'theme-device';
