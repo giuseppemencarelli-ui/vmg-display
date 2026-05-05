@@ -216,11 +216,39 @@ export class HomePage implements OnInit, OnDestroy {
 
   getMeasurandValue(measurandId: string): string {
     // Legge il valore dal state (source of truth)
-    // Se il measurandId non esiste nel currentMeasurandValues, ritorna "-"
+    // Se il measurandId non esiste nel currentMeasurandValues, ritorna "—"
     const value = this.currentMeasurandValues[measurandId as keyof MeasurandValues];
-    return value.value || '—';
+    const rawValue = value.value || '—';
+
+    const measurand = this.getMeasurandData(measurandId);
+    if (measurand?.dataType === 'degrees') {
+      const numericValue = Number(rawValue);
+      if (!Number.isNaN(numericValue) && Number.isFinite(numericValue)) {
+        const rounded = Math.round(numericValue);
+        const padded = String(Math.abs(rounded)).padStart(3, '0');
+        return padded;
+      }
+    }
+    return rawValue;
   }
 
+  getMeasurandValueCdi(measurandId: string): { value: string; color: string } { 
+    const value = this.currentMeasurandValues[measurandId as keyof MeasurandValues];
+    const rawValue = value.value || '—';
+    const numericValue = Number(rawValue);
+    console.log('CDI raw value:', rawValue, 'numeric value:', numericValue);
+    if (!Number.isNaN(numericValue) && Number.isFinite(numericValue)) {
+      const rounded = Math.round(Math.abs(numericValue));
+      
+      const clamped = Math.max(-45, Math.min(45, rounded));
+      const needleX = ((clamped + 45) / 90) * 218; // 222 - 4px ago
+      const needleColor = numericValue === 0 ? '#4ab89a' : numericValue > 0 ? '#5a9fd4' : '#d4a044';
+      console.log('CDI clamped value:', clamped, 'needleX:', needleX, 'needleColor:', needleColor);
+      return { value: String(16 + needleX), color: needleColor };
+      //return { value: "10", color: needleColor };
+    }
+    return { value: '—', color: '#4ab89a' };
+  }
 
   getMeasurandMessage(measurandId: string): string {
     // Legge il valore dal state (source of truth)
@@ -242,18 +270,25 @@ export class HomePage implements OnInit, OnDestroy {
 
     const relatedData = this.getMeasurandData(data.relatedId);
     const relatedValue = this.getMeasurandValue(data.relatedId);
+    const relatedUnit = relatedData?.unit || '';
 
     if (!relatedData || !relatedValue) {
       return '';
     }
 
-    return `${relatedData.shortLabel} ${relatedValue}`;
+    return `${relatedData.shortLabel} ${relatedValue} ${relatedUnit}`;
   }
 
   isPositionType(measurandId: string): boolean {
     const data = this.getMeasurandData(measurandId);
     return data?.dataType === 'position';
   }
+
+  isDegreesSdType(measurandId: string): boolean {
+    const data = this.getMeasurandData(measurandId);
+    return data?.dataType === 'degrees_sd';
+  }
+
 
   getPositionLines(measurandId: string): string[] {
     const value = this.getMeasurandValue(measurandId);
@@ -265,6 +300,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   goToOperativa() {
-    this.router.navigate(['/operativa']);
+    this.router.navigate(['/setrotta']);
   }
 }

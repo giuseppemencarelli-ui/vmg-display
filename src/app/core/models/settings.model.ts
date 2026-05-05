@@ -11,6 +11,19 @@ export type DistanceUnit = 'nm' | 'km';
 export type DepthUnit = 'm' | 'ft';
 export type PositionFormat = 'decimal' | 'ddmm' | 'ddmmss';
 export type TimeFormat = 'local' | 'utc';
+export type RouteMode = 'bearing' | 'destination';
+
+export interface DestinationPoint {
+  latitude: number;
+  longitude: number;
+  name?: string;
+}
+
+export interface RouteSettings {
+  mode: RouteMode;
+  bearing?: number; // gradi (0-359)
+  destination?: DestinationPoint;
+}
 
 // ============================================================================
 // VALORI DEI MEASURANDS - Source of Truth
@@ -31,6 +44,7 @@ export const DEFAULT_MEASURAND_VALUES: MeasurandValues = {
   eff: { value: '—' },
   brg: { value: '—' },
   cdi: { value: '—' },
+  cdi_value: { value: '—' },
 
   wind_speed: { value: '—' },
   wind_angle: { value: '—' },
@@ -54,6 +68,7 @@ export interface UserSettings {
   dashboardConfig: DashboardConfig;
   timeFormat: TimeFormat;
   showSeconds: boolean;
+  routeSettings: RouteSettings;
 }
 
 export const DEFAULT_SETTINGS: UserSettings = {
@@ -68,4 +83,8 @@ export const DEFAULT_SETTINGS: UserSettings = {
   showSeconds: false,
   positionFormat: 'ddmm',
   dashboardConfig: DEFAULT_DASHBOARD_CONFIG,
+  routeSettings: {
+    mode: 'bearing',
+    bearing: 0
+  }
 };

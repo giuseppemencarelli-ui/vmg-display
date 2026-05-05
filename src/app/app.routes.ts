@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/settings/settings.page').then((m) => m.SettingsPage),
   },
   {
+    path: 'setrotta',
+    loadComponent: () => import('./features/setrotta/setrotta.page').then((m) => m.SetrottaPage),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

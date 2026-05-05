@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" class="back-button">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Imposta Rotta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="nautical-content">
+  <!-- Selezione modalità con card grandi -->
+  <div class="mode-selection">
+    <div class="mode-card"
+         [class.selected]="isBearingMode()"
+         (click)="onModeChange('bearing')">
+      <ion-icon name="compass-outline" class="mode-icon"></ion-icon>
+      <h3>Rotta in Gradi</h3>
+      <p>Imposta direttamente l'angolo di rotta</p>
+    </div>
+
+    <div class="mode-card"
+         [class.selected]="isDestinationMode()"
+         (click)="onModeChange('destination')">
+      <ion-icon name="location-outline" class="mode-icon"></ion-icon>
+      <h3>Punto Destinazione</h3>
+      <p>Calcola rotta da posizione corrente</p>
+    </div>
+  </div>
+
+  <!-- Modalità: Rotta in gradi -->
+  <div class="input-section" *ngIf="isBearingMode()">
+    <div class="input-card">
+      <ion-icon name="compass" class="input-icon"></ion-icon>
+      <h4>Angolo di Rotta</h4>
+
+      <div class="bearing-input-container">
+        <ion-input
+          type="number"
+          [(ngModel)]="bearingValue"
+          min="0"
+          max="359"
+          placeholder="000"
+          class="bearing-input">
+        </ion-input>
+        <span class="degree-symbol">°</span>
+      </div>
+
+      <div class="bearing-buttons">
+        <ion-button fill="outline" (click)="setBearing(0)">N</ion-button>
+        <ion-button fill="outline" (click)="setBearing(90)">E</ion-button>
+        <ion-button fill="outline" (click)="setBearing(180)">S</ion-button>
+        <ion-button fill="outline" (click)="setBearing(270)">W</ion-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modalità: Punto di destinazione -->
+  <div class="input-section" *ngIf="isDestinationMode()">
+    <div class="input-card">
+      <ion-icon name="location" class="input-icon"></ion-icon>
+      <h4>Punto di Destinazione</h4>
+
+      <div class="destination-inputs">
+        <div class="input-row">
+          <ion-label>Nome (opzionale)</ion-label>
+          <ion-input
+            [(ngModel)]="destinationName"
+            placeholder="Porto di arrivo"
+            class="name-input">
+          </ion-input>
+        </div>
+
+        <div class="coord-row">
+          <div class="coord-input">
+            <ion-label>Latitudine</ion-label>
+            <div class="coord-input-container">
+              <ion-input
+                type="number"
+                [(ngModel)]="destinationLat"
+                min="-90"
+                max="90"
+                step="0.0001"
+                placeholder="43.1234"
+                class="coord-input-field">
+              </ion-input>
+              <span class="coord-unit">°N</span>
+            </div>
+          </div>
+
+          <div class="coord-input">
+            <ion-label>Longitudine</ion-label>
+            <div class="coord-input-container">
+              <ion-input
+                type="number"
+                [(ngModel)]="destinationLon"
+                min="-180"
+                max="180"
+                step="0.0001"
+                placeholder="10.5678"
+                class="coord-input-field">
+              </ion-input>
+              <span class="coord-unit">°E</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calculated-bearing" *ngIf="calculatedBearing !== null">
+        <ion-icon name="navigate-circle-outline"></ion-icon>
+        <span>Rotta calcolata: {{ calculatedBearing }}°</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pulsante di salvataggio grande e prominente -->
+  <div class="save-section">
+    <ion-button
+      expand="block"
+      size="large"
+      (click)="onSave()"
+      class="save-button">
+      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+      Salva Rotta
+    </ion-button>
+  </div>
+</ion-content>

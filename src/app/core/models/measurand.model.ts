@@ -11,7 +11,7 @@ export type DataType =
   | 'string';
 
 export type MeasurandId =
-  | 'sog' | 'max' | 'cog' | 'pos' | 'vmg'| 'eff' | 'brg'| 'cdi' | 'wind_speed' | 'wind_angle'
+  | 'sog' | 'max' | 'cog' | 'pos' | 'vmg'| 'eff' | 'brg'| 'cdi' | 'cdi_value' | 'wind_speed' | 'wind_angle'
   | 'depth' | 'destination_dist'
   | 'destination_eta' | 'hdg' | 'rpm' | 'water_temp';
 
@@ -27,13 +27,14 @@ export interface Measurand {
 
 export const MEASURANDS: Record<MeasurandId, Measurand> = {
   sog:              { id: 'sog',              label: 'Velocità sul fondo', shortLabel: 'SOG', unit: 'kn',  decimals: 1, dataType: 'number.float', relatedId: 'max' },
-  max:              { id: 'max',              label: 'Velocità massima',   shortLabel: 'MAX', unit: 'kn',  decimals: 1, dataType: 'number.float' },
+  max:              { id: 'max',              label: 'Velocità massima',   shortLabel: 'MAX', unit: '',  decimals: 1, dataType: 'number.float' },
   cog:              { id: 'cog',              label: 'Rotta sul fondo',    shortLabel: 'COG', unit: '°',   decimals: 0, dataType: 'degrees'      },
   pos:              { id: 'pos',              label: 'Posizione',          shortLabel: 'POS', unit: '',    decimals: 4, dataType: 'position'     },
   vmg:              { id: 'vmg',              label: 'Velocita di avvicinamento',          shortLabel: 'VMG', unit: 'kn',  decimals: 1, dataType: 'number.float', relatedId: 'eff' },
-  eff:              { id: 'eff',              label: 'Efficienza',          shortLabel: 'EFF', unit: 'kn',  decimals: 1, dataType: 'string' },
+  eff:              { id: 'eff',              label: 'Efficienza',          shortLabel: 'EFF', unit: '%',  decimals: 1, dataType: 'string' },
   brg:              { id: 'brg',              label: 'Rotta da seguire',    shortLabel: 'BRG', unit: '°',   decimals: 0, dataType: 'degrees'  },
-  cdi:              { id: 'cdi',              label: 'Deviazione da rotta', shortLabel: 'CDI', unit: '°',   decimals: 0, dataType: 'degrees_sd', relatedId: 'brg'  },
+  cdi:              { id: 'cdi',              label: 'Deviazione da rotta', shortLabel: 'CDI', unit: '°',   decimals: 0, dataType: 'degrees_sd', relatedId: 'cdi_value'  },
+  cdi_value:        { id: 'cdi_value',        label: '',                    shortLabel: 'CDI', unit: '°',   decimals: 0, dataType: 'number.int'  },
   
   
   wind_speed:       { id: 'wind_speed',       label: 'Velocità vento',     shortLabel: 'AWS', unit: 'kn',  decimals: 1, dataType: 'number.float' },
