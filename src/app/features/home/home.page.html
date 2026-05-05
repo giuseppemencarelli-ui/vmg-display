@@ -1,5 +1,5 @@
 <!-- home.page.html -->
-<ion-content [fullscreen]="true" scrollY="false" scrollX="false" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+<ion-content [fullscreen]="true" scrollY="false" scrollX="false" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)" [attr.data-layout]="getCurrentLayoutString()">
   <div [style.display]="'flex'" 
        [style.flex-direction]="'column'" 
        [style.gap.px]="getContainerGap()"
@@ -14,7 +14,7 @@
              [style.gap.px]="getGridGap()"
              style="flex: 1;">
           
-          <div *ngFor="let slot of slots" class="dash-card style-{{ slot.measurandId }}">
+          <div *ngFor="let slot of slots" class="dash-card style-{{ slot.measurandId }}" [attr.data-layout]="getCurrentLayoutString()">
             <div class="dash-label">
               <div class="label-text"> 
                 {{ getMeasurandData(slot.measurandId)?.shortLabel }}

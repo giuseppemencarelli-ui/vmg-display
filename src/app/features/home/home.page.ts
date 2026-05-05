@@ -131,6 +131,10 @@ export class HomePage implements OnInit, OnDestroy {
     return layout;
   }
 
+  getCurrentLayoutString(): string {
+    return this.getCurrentLayout().toString();
+  }
+
   private getCurrentOrientation(): Orientation {
     return window.matchMedia('(orientation: landscape)').matches ? 'landscape' : 'portrait';
   }
