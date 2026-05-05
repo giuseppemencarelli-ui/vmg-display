@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { IonContent } from '@ionic/angular/standalone';
+import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AppStateService } from '../../core/services/app-state-service';
 import { SettingsService } from '../../core/services/settings';
@@ -12,6 +12,9 @@ import { map, Observable, Subject, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FitTextDirective } from '../../directives/fit-text.directive';
 
+import { addIcons } from 'ionicons';
+import * as ionIcons from 'ionicons/icons';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -19,7 +22,7 @@ import { FitTextDirective } from '../../directives/fit-text.directive';
   imports: [
     AsyncPipe,
     FitTextDirective,
-    CommonModule,IonContent
+    CommonModule,IonContent, IonIcon
   ],
 })
 export class HomePage implements OnInit, OnDestroy {
@@ -30,6 +33,29 @@ export class HomePage implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
   private orientationChange$ = new Subject<Orientation>();
+
+
+  /*Gestione dimensione font degli strumenti ad una sola linea*/
+  @ViewChildren(FitTextDirective) fitDirectives!: QueryList<FitTextDirective>;
+  private sizes: Map<number, number> = new Map();
+
+  onFitted(size: number, index: number) {
+    this.sizes.set(index, size);
+
+    // aspetta che tutti gli slot abbiano riportato la loro dimensione
+    if (this.sizes.size === this.getCurrentLayout()) {
+      const min = Math.min(...this.sizes.values());
+      this.fitDirectives.forEach(d => d.applySize(min));
+    }
+  }
+
+  private resetFontSizing() {
+    this.sizes.clear();
+    setTimeout(() => {
+      this.fitDirectives?.forEach(d => d.recalculate());
+    }, 0);
+  }
+
 
   // Variabili per gestire lo swipe
   private touchStartX: number = 0;
@@ -72,6 +98,7 @@ export class HomePage implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(values => {
         this.currentMeasurandValues = values;
+        this.resetFontSizing();
       });
 
     // Ascolta cambiamenti di orientamento
@@ -81,6 +108,7 @@ export class HomePage implements OnInit, OnDestroy {
     mediaQuery.addEventListener('change', (e) => {
       const orientation: Orientation = e.matches ? 'landscape' : 'portrait';
       console.log('Orientation changed:', orientation);
+      this.resetFontSizing();
       this.orientationChange$.next(orientation);
     });
 
@@ -163,6 +191,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   private updateLayout(newLayout: LayoutSize): void {
+    this.resetFontSizing();
     const currentSettings = this.settingsSvc.currentSettings;
     if (currentSettings) {
       const updatedSettings = {
@@ -185,7 +214,36 @@ export class HomePage implements OnInit, OnDestroy {
     // Legge il valore dal state (source of truth)
     // Se il measurandId non esiste nel currentMeasurandValues, ritorna "-"
     const value = this.currentMeasurandValues[measurandId as keyof MeasurandValues];
-    return value || '—';
+    return value.value || '—';
+  }
+
+
+  getMeasurandMessage(measurandId: string): string {
+    // Legge il valore dal state (source of truth)
+    // Se il measurandId non esiste nel currentMeasurandValues, ritorna "-"
+    const value = this.currentMeasurandValues[measurandId as keyof MeasurandValues];
+    return value.message || '';
+  }
+
+  /**
+   * Ritorna la label per il measurand correlato
+   * Se il measurand ha un relatedId, ritorna: "RELATED_SHORTLABEL RELATED_VALUE"
+   * Altrimenti ritorna una stringa vuota
+   */
+  getRelatedLabel(measurandId: string): string {
+    const data = this.getMeasurandData(measurandId);
+    if (!data?.relatedId) {
+      return '';
+    }
+
+    const relatedData = this.getMeasurandData(data.relatedId);
+    const relatedValue = this.getMeasurandValue(data.relatedId);
+
+    if (!relatedData || !relatedValue) {
+      return '';
+    }
+
+    return `${relatedData.shortLabel} ${relatedValue}`;
   }
 
   isPositionType(measurandId: string): boolean {

@@ -76,14 +76,12 @@ export class AppStateService {
 
     // Mappiamo i dati dal LocationService
     if (locationData) {
-      measurands.pos = `${locationData.lat.toFixed(4)} $ ${locationData.lon.toFixed(4)}`;
-      measurands.sog = locationData.sog.toFixed(1);
-      measurands.cog = locationData.cog.toFixed(0);
-      console.log('AppStateService - Measurands aggiornati da LocationService:', { 
-        sog: measurands.sog, 
-        cog: measurands.cog, 
-        pos: measurands.pos 
-      });
+      measurands.pos.value = `${locationData.lat.toFixed(4)} $ ${locationData.lon.toFixed(4)}`;
+      measurands.sog.value = locationData.sog.toFixed(1);
+      measurands.cog.value = locationData.cog.toFixed(0);
+      measurands.vmg.value = '—'; // VMG non calcolato direttamente da LocationService, rimane default per ora
+      measurands.vmg.message = '(i)Impostare una rotta';
+      console.log('AppStateService - Measurands aggiornati da LocationService:');
     }
 
     // TODO: In futuro, aggiungere qui la logica per mappare i dati da NmeaService

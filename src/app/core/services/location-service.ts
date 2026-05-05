@@ -41,8 +41,8 @@ export class LocationService {
       this.locationData.next({
         lat: 45.0,
         lon: 9.0,
-        sog: 5.5,
-        cog: 180.0,
+        sog: 1.0,
+        cog: 888,
         accuracy: 5.0 
       });
     }, 5000);

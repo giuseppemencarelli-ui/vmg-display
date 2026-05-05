@@ -16,16 +16,20 @@
           
           <div *ngFor="let slot of slots" class="dash-card style-{{ slot.measurandId }}">
             <div class="dash-label">
-              <span class="label-text"> 
-              {{ getMeasurandData(slot.measurandId)?.shortLabel }} </span>
-              <span class="unit-text">
-                {{ getMeasurandData(slot.measurandId)?.unit }}
+              <div class="label-text"> 
+                {{ getMeasurandData(slot.measurandId)?.shortLabel }}
+                <span class="unit-text">
+                  {{ getMeasurandData(slot.measurandId)?.unit }}
+                </span> 
+              </div>
+              <span class="right-text">
+                {{ getRelatedLabel(slot.measurandId) }}
               </span> 
             </div>
             
             <!-- Valore standard (una sola riga) -->
             <div *ngIf="!isPositionType(slot.measurandId)" class="dash-value">
-              <span fitText>{{ getMeasurandValue(slot.measurandId) }}</span>
+              <span fitText (fitted)="onFitted($event, slot.position)">{{ getMeasurandValue(slot.measurandId) }}</span>
             </div>
 
             <!-- Valore posizione (due righe) -->
@@ -35,10 +39,19 @@
               </div>
             </div>
             
-            <!--
-            <div class="dash-unit">
-              {{ getMeasurandData(slot.measurandId)?.unit }}
-            </div> -->
+            @if (getMeasurandMessage(slot.measurandId); as msg) {
+              <div class="dash-message">
+                @if (msg.startsWith('(i)')) {
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                  {{ msg.slice(3) }}
+                } @else if (msg.startsWith('(e)')) {
+                  <ion-icon name="close-circle-outline"></ion-icon>
+                  {{ msg.slice(3) }}
+                } @else {
+                  {{ msg }}
+                }
+              </div>
+            }
           </div>
 
         </div>

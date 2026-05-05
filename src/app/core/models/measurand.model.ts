@@ -32,7 +32,7 @@ export const MEASURANDS: Record<MeasurandId, Measurand> = {
   pos:              { id: 'pos',              label: 'Posizione',          shortLabel: 'POS', unit: '',    decimals: 4, dataType: 'position'     },
   vmg:              { id: 'vmg',              label: 'Velocita di avvicinamento',          shortLabel: 'VMG', unit: 'kn',  decimals: 1, dataType: 'number.float', relatedId: 'eff' },
   eff:              { id: 'eff',              label: 'Efficienza',          shortLabel: 'EFF', unit: 'kn',  decimals: 1, dataType: 'string' },
-  brg:              { id: 'brg',              label: 'Rotta da seguire',    shortLabel: 'BRG', unit: '°',   decimals: 0, dataType: 'degrees', relatedId: 'eff'  },
+  brg:              { id: 'brg',              label: 'Rotta da seguire',    shortLabel: 'BRG', unit: '°',   decimals: 0, dataType: 'degrees'  },
   cdi:              { id: 'cdi',              label: 'Deviazione da rotta', shortLabel: 'CDI', unit: '°',   decimals: 0, dataType: 'degrees_sd', relatedId: 'brg'  },
   
   

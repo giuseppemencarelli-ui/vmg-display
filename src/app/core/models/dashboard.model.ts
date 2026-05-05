@@ -42,16 +42,16 @@ export const DEFAULT_SLOTS: Record<LayoutSize, InstrumentSlot[]> = {
   4: [
     { position: 0, measurandId: 'sog' },
     { position: 1, measurandId: 'cog' },
-    { position: 2, measurandId: 'cdi' },
-    { position: 3, measurandId: 'vmg' },
+    { position: 2, measurandId: 'vmg' },
+    { position: 3, measurandId: 'cdi' },
   ],
   6: [
     { position: 0, measurandId: 'sog' },
     { position: 1, measurandId: 'cog' },
     { position: 2, measurandId: 'pos' },
-    { position: 3, measurandId: 'cdi' },
-    { position: 4, measurandId: 'vmg' },
-    { position: 5, measurandId: 'pos' },
+    { position: 3, measurandId: 'vmg' },
+    { position: 4, measurandId: 'brg' },
+    { position: 5, measurandId: 'cdi' },
   ],
 };
 

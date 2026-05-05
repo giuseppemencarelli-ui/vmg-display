@@ -15,26 +15,31 @@ export type TimeFormat = 'local' | 'utc';
 // ============================================================================
 // VALORI DEI MEASURANDS - Source of Truth
 // ============================================================================
-export type MeasurandValues = Record<MeasurandId, string>;
+export interface MeasurandValue {
+  value: string;
+  message?: string;  // opzionale prefisso con (i) per messaggi informativi, (e) per errore sostituisce icona e valore con messaggio oopure nulla diveta i senza icona
+}
+
+export type MeasurandValues = Record<MeasurandId, MeasurandValue>;
 
 export const DEFAULT_MEASURAND_VALUES: MeasurandValues = {
-  sog: '—',
-  max: '—',
-  cog: '—',
-  pos: '—',
-  vmg: '—',
-  eff: '—',
-  brg: '—',
-  cdi: '—',
+  sog: { value: '—' },
+  max: { value: '—' },
+  cog: { value: '—' },
+  pos: { value: '—' },
+  vmg: { value: '—' },
+  eff: { value: '—' },
+  brg: { value: '—' },
+  cdi: { value: '—' },
 
-  wind_speed: '—',
-  wind_angle: '—',
-  depth: '—',
-  destination_dist: '—',
-  destination_eta: '—',
-  hdg: '—',
-  rpm: '—',
-  water_temp: '—'
+  wind_speed: { value: '—' },
+  wind_angle: { value: '—' },
+  depth: { value: '—' },
+  destination_dist: { value: '—' },
+  destination_eta: { value: '—' },
+  hdg: { value: '—' },
+  rpm: { value: '—' },
+  water_temp: { value: '—' }
 };
 
 export interface UserSettings {

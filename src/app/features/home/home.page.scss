@@ -45,7 +45,7 @@ ion-content {
   .dash-label {
     /*position: absolute;
     z-index: 2; /* Sopra al numero */
-    font-size: 15cqh;
+    font-size: 10cqw;
     font-weight: 600;
     color: var(--ion-color-medium);
     /*margin-bottom: 4px; */
@@ -60,9 +60,13 @@ ion-content {
     }
 
     .unit-text {
+      /*text-align: right;  */
+      font-size: 0.8em; 
+      opacity: 0.8;
+    }
+
+    .right-text {
       text-align: right;
-      /* Spesso le unità sono leggermente più piccole o meno opache 
-        per dare enfasi al nome della metrica */
       font-size: 0.8em; 
       opacity: 0.8;
     }
@@ -115,17 +119,24 @@ ion-content {
     }
   }
 
-  .dash-unit {
+  .dash-message {
     font-size: 10px;
     font-weight: 500;
     color: var(--ion-color-medium-shade);
-    margin-top: 2px;
-    flex-shrink: 0;
 
     @media (orientation: landscape) {
       font-size: 9px;
-      margin-top: 1px;
     }
+    position: absolute;
+    bottom: 5px;
+    z-index: 10;
+    width: 100%;
+
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    gap:4px;
+
   }
 }
 
