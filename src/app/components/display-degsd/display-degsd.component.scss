@@ -1,0 +1,42 @@
+.degsd-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: auto;
+
+  .col_left, .col_right {
+    /* flex: grow | shrink | basis */
+    /* Non crescono, non rimpiccioliscono, base fissa */
+    flex: 0 0 20%; 
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 1px; // Evita il collasso se vuote
+
+    .val-icon {
+      /* In Ionic, ion-icon risponde a font-size */
+      font-size: 65px; 
+      width: 100%;
+    }
+  }
+
+  .col_left {
+    justify-content: flex-start; // Icona a sinistra
+  }
+
+  .col_right {
+    justify-content: flex-end; // Icona a destra
+  }
+
+  .col_center {
+    flex: 1; // Occupa tutto lo spazio rimanente
+    text-align: center;
+    /* Opzionale: evita che il testo vada su più righe */
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

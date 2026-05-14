@@ -4,16 +4,14 @@ import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AppStateService } from '../../core/services/app-state-service';
 import { SettingsService } from '../../core/services/settings';
-import { menuOutline } from 'ionicons/icons';
+
 import { LayoutSize, LAYOUT_COLUMNS, Orientation, DEFAULT_SLOTS } from '../../core/models/dashboard.model';
 import { MEASURANDS, Measurand } from '../../core/models/measurand.model';
 import { MeasurandValues, DEFAULT_MEASURAND_VALUES } from '../../core/models/settings.model';
 import { map, Observable, Subject, merge } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FitTextDirective } from '../../directives/fit-text.directive';
-
-import { addIcons } from 'ionicons';
-import * as ionIcons from 'ionicons/icons';
+import { DisplayDegsdComponent } from '@app/components/display-degsd/display-degsd.component';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +20,7 @@ import * as ionIcons from 'ionicons/icons';
   imports: [
     AsyncPipe,
     FitTextDirective,
-    CommonModule,IonContent, IonIcon
+    CommonModule,IonContent, IonIcon, DisplayDegsdComponent
   ],
 })
 export class HomePage implements OnInit, OnDestroy {
@@ -35,6 +33,11 @@ export class HomePage implements OnInit, OnDestroy {
   private orientationChange$ = new Subject<Orientation>();
 
 
+  constructor() {
+    
+  }
+
+
   /*Gestione dimensione font degli strumenti ad una sola linea*/
   @ViewChildren(FitTextDirective) fitDirectives!: QueryList<FitTextDirective>;
   private sizes: Map<number, number> = new Map();
@@ -42,7 +45,10 @@ export class HomePage implements OnInit, OnDestroy {
   onFitted(size: number, index: number) {
     this.sizes.set(index, size);
 
+    //console.log('Fitted event received - Index:', index, 'Size:', size);
+    //console.log('Current sizes map:', Array.from(this.sizes.entries()));
     // aspetta che tutti gli slot abbiano riportato la loro dimensione
+    console
     if (this.sizes.size === this.getCurrentLayout()) {
       const min = Math.min(...this.sizes.values());
       this.fitDirectives.forEach(d => d.applySize(min));

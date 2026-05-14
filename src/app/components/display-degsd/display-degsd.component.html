@@ -1,0 +1,23 @@
+<div class="degsd-container">
+  <div class="col_left">
+    @if (showLeftArrow()) {
+      <ion-icon 
+          name="caret-back-outline" 
+          class="val-icon">
+      </ion-icon>
+    }
+    </div>
+    <div class="col_center">
+    <span fitText (fitted)="onFitted($event, slotPosition)">
+        {{ valore === '-' ? valore : valore.replace('-', '')  }}
+    </span>
+    </div>
+    <div class="col_right">
+      @if (showRightArrow()) {
+        <ion-icon 
+          name="caret-forward-outline" 
+          class="val-icon">
+        </ion-icon>
+      }
+    </div>
+</div>

@@ -26,8 +26,8 @@ export class StatusBarComponent implements OnInit, OnDestroy {
   // Observables
   status$: Observable<Status> = this.appStateSvc.state$.pipe(
     map(state => {
-      console.log('StatusBar - State ricevuto:', state);
-      console.log('StatusBar - Status:', state?.status);
+      //console.log('StatusBar - State ricevuto:', state);
+      //console.log('StatusBar - Status:', state?.status);
       return state?.status;
     })
   );
@@ -48,10 +48,10 @@ export class StatusBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('StatusBar - Component inizializzato');
+    //console.log('StatusBar - Component inizializzato');
     // Sottoscrivi ai cambiamenti dello stato
     this.status$.pipe(takeUntil(this.destroy$)).subscribe(status => {
-      console.log('StatusBar - Status sottoscritto:', status);
+      //console.log('StatusBar - Status sottoscritto:', status);
       // Se lo stato cambia mentre è espanso, resetta il timer
       if (this.isExpanded) {
         this.resetExpandTimer();

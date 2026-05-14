@@ -89,48 +89,12 @@ export class AppStateService {
 
     if (locationData) {
       measurands.pos.value = `${locationData.lat.toFixed(4)} $ ${locationData.lon.toFixed(4)}`;
-      measurands.sog.value = locationData.sog.toFixed(1);
-      measurands.cog.value = locationData.cog.toFixed(0);
 
-      const routeBearing = userPrefs?.routeSettings?.bearing;
-      const vmgValue = typeof routeBearing === 'number'
-        ? calculateVmg(locationData.sog, locationData.cog, routeBearing)
-        : null;
-
-      if (vmgValue !== null) {
-        measurands.vmg.value = vmgValue.toFixed(1);
-        measurands.vmg.message = '';
-      } else {
-        measurands.vmg.value = '—';
-        measurands.vmg.message = '(i)Impostare una rotta';
-      }
-
-      const destination = userPrefs?.routeSettings?.destination;
-      if (destination && typeof destination.latitude === 'number' && typeof destination.longitude === 'number') {
-        const distanceNm = haversineDistanceNm(
-          locationData.lat,
-          locationData.lon,
-          destination.latitude,
-          destination.longitude
-        );
-
-        if (distanceNm !== null) {
-          measurands.destination_dist.value = distanceNm.toFixed(1);
-          const eta = calculateDestinationEta(distanceNm, locationData.sog);
-          measurands.destination_eta.value = eta || '—';
-          measurands.destination_eta.message = eta ? '' : '(i)Impostare la velocità';
-        }
-      }
-      if (typeof routeBearing === 'number') {
-        const cdiValue = calculateCdi(locationData.cog, routeBearing);
-        if (cdiValue !== null) {
-          measurands.cdi.value = cdiValue.toFixed(0);
-          measurands.cdi.message = '';
-          measurands.cdi_value.value = cdiValue.toFixed(0);
-        }
-      }
-      console.log('AppStateService - Measurands aggiornati da LocationService:');
+      this.manageSpeed(userPrefs, locationData, measurands);
+      this.manageCourse(userPrefs, locationData, measurands);
+      this.manageVmg(userPrefs, locationData, measurands);
     }
+  
 
     // Applichiamo gli aggiornamenti manuali
     Object.keys(manualMeasurands).forEach(key => {
@@ -209,5 +173,68 @@ export class AppStateService {
     this.state$.subscribe(state => currentState = state).unsubscribe();
     return currentState;
   }
+
+
+  /*Manage Value Data  */
+
+
+  manageSpeed(userPrefs: UserSettings, locationData: LocationData, measurands: MeasurandValues) {
+      measurands.sog.value = locationData.sog.toFixed(1);
+      if(measurands.max.value === '—') {
+        measurands.max.value = measurands.sog.value ;
+      } else {
+        const currentMax = parseFloat(measurands.max.value);
+        if (locationData.sog > currentMax) {
+          measurands.max.value = measurands.sog.value;
+        }
+      }
+    }
+
+  manageCourse(userPrefs: UserSettings, locationData: LocationData, measurands: MeasurandValues) {
+    measurands.cog.value = locationData.cog.toFixed(0);
+    
+    const routeBearing = userPrefs?.routeSettings?.bearing;
+    const destination = userPrefs?.routeSettings?.destination;
+    if (destination && typeof destination.latitude === 'number' && typeof destination.longitude === 'number') {
+      const distanceNm = haversineDistanceNm(
+        locationData.lat,
+        locationData.lon,
+        destination.latitude,
+        destination.longitude
+      );
+
+      if (distanceNm !== null) {
+        measurands.destination_dist.value = distanceNm.toFixed(1);
+        const eta = calculateDestinationEta(distanceNm, locationData.sog);
+        measurands.destination_eta.value = eta || '—';
+        measurands.destination_eta.message = eta ? '' : '(i)Impostare la velocità';
+      }
+    }
+    if (typeof routeBearing === 'number') {
+      const cdiValue = calculateCdi(locationData.cog, routeBearing);
+      if (cdiValue !== null) {
+        measurands.cdi.value = cdiValue.toFixed(0);
+        measurands.cdi.message = '';
+        measurands.cdi_value.value = cdiValue.toFixed(0);
+      }
+    }
+  }
+
+  manageVmg(userPrefs: UserSettings, locationData: LocationData, measurands: MeasurandValues) {  
+    const routeBearing = userPrefs?.routeSettings?.bearing;
+    const vmgValue = typeof routeBearing === 'number'
+      ? calculateVmg(locationData.sog, locationData.cog, routeBearing)
+      : null;
+
+    if (vmgValue !== null) {
+      measurands.vmg.value = vmgValue.toFixed(1);
+      measurands.vmg.message = '';
+    } else {
+      measurands.vmg.value = '—';
+      measurands.vmg.message = '(i)Impostare una rotta';
+    }
+  }
+
+
 }
 
