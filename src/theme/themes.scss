@@ -47,6 +47,9 @@ app-root.theme-device {
 
     --ion-color-medium-shade: #424a51;
     --ion-color-medium-shade-rgb: 66, 74, 81;
+
+    --ion-color-step-150-rgb: 217, 217, 217;
+    --ion-color-step-300: #b3b3b3;
   }
 
   // Dark mode
@@ -139,6 +142,9 @@ app-root.theme-battery {
   --ion-color-medium-shade: #999999;
   --ion-color-medium-shade-rgb: 153, 153, 153;
 
+  --ion-color-step-150-rgb: 38, 38, 38;
+  --ion-color-step-300: #4d4d4d;
+
   // Riduzione della luminosità globale
   filter: brightness(0.95);
 }
@@ -190,6 +196,9 @@ app-root.theme-night {
 
   --ion-color-medium-shade: #ff6666;
   --ion-color-medium-shade-rgb: 255, 102, 102;
+
+  --ion-color-step-150-rgb: 38, 38, 38;
+  --ion-color-step-300: #4d4d4d;
 
   // Filtro rosso per tutto
   filter: saturate(1.5) hue-rotate(-15deg);

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonList, IonListHeader, IonItem, IonLabel, IonSelect, IonSelectOption, IonToggle } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonButton, IonList, IonListHeader, IonItem, IonLabel, IonSelect, IonSelectOption, IonToggle, IonIcon, IonChip, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../core/services/settings';
 
@@ -13,9 +13,10 @@ import { SettingsService } from '../../core/services/settings';
     AsyncPipe,
     FormsModule,
     IonHeader, IonToolbar, IonTitle, IonContent,
-    IonBackButton, IonButtons,
+    IonBackButton, IonButtons, IonButton, IonIcon,
     IonList,IonListHeader, IonItem, IonLabel,
-    IonSelect, IonSelectOption, IonToggle
+    IonSelect, IonSelectOption, IonToggle, IonChip,
+    IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent
   ],
 })
 export class SettingsPage {
@@ -49,4 +50,16 @@ export class SettingsPage {
   goBack() {
     this.router.navigate(['/home']);
   }
+
+  isLanguageSelected( lang: string): boolean {
+    return this.settings.language === lang;
+  }
+
+  onLanguageChange(lang: string) {
+    this.settings.language = lang === 'it'  ? 'it' : 'en';
+    this.onSave();
+  } 
+    
+
+
 }
