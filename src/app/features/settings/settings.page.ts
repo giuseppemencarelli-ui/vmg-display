@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonButton, IonList, IonListHeader, IonItem, IonLabel, IonSelect, IonSelectOption, IonToggle, IonIcon, IonChip, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../core/services/settings';
+import { LocalizationService } from '@app/core/services/localization-service';
 
 @Component({
   selector: 'app-settings',
@@ -20,6 +21,7 @@ import { SettingsService } from '../../core/services/settings';
   ],
 })
 export class SettingsPage {
+  public localizationSvc = inject(LocalizationService);
   private settingsSvc = inject(SettingsService);
   private router = inject(Router);
   
@@ -59,7 +61,48 @@ export class SettingsPage {
     this.settings.language = lang === 'it'  ? 'it' : 'en';
     this.onSave();
   } 
-    
+  
+  isAspettoSelected( aspetto: string): boolean {
+    return this.settings.theme === aspetto;
+  }
 
+  onAspettoChange(aspetto: string) {
+    this.settings.theme = aspetto === 'device' ? 'device' : (aspetto === 'battery' ? 'battery' : 'night');
+    this.onSave();
+  }   
+
+  isFontSelected( font: string): boolean {
+    return this.settings.fontFamily === font;
+  }
+
+  onFontChange(font: string) {
+    this.settings.fontFamily = font === 'Orbitron' ? 'Orbitron' : 'JetBrains Mono';
+    this.onSave();
+  }
+
+  isInstrumentStyleSelected( style: string): boolean {
+    return this.settings.styleVersion === style;
+  }
+
+  onInstrumentStyleChange(style: string) {
+    this.settings.styleVersion = style === 'versione3' ? 'versione3' : 'versione4';
+    this.onSave();
+  }
+
+  isFusocSelected( fusoc: string): boolean {
+    return this.settings.timeFormat === fusoc;
+  }   
+  onFusocChange(fusoc: string) {
+    this.settings.timeFormat = fusoc === 'local' ? 'local' : 'utc';
+    this.onSave();
+  }
+  
+  isShowSecondsSelected( showSeconds: boolean): boolean {
+    return this.settings.showSeconds === showSeconds;
+  }   
+  onShowSecondsChange(showSeconds: boolean) {
+    this.settings.showSeconds = showSeconds;
+    this.onSave();
+  }
 
 }

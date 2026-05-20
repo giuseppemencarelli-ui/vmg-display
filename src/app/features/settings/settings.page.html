@@ -5,22 +5,22 @@
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Impostazioni</ion-title>
+    <ion-title>{{ localizationSvc.translate('Impostazioni') }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="nautical-content">
 
-<div class="selection-group">
+  <!-- Lingua -->
+  <div class="selection-group">
     <h2 class="group-title">Lingua/ Language</h2>
-    
+    <h3 class="group-subtitle">Scegli la lingua / Choose your language</h3>
     <div class="mode-selection">
       <div class="mode-card"
           [class.selected]="isLanguageSelected('it')"
           (click)="onLanguageChange('it')">
         <h3>Italiano</h3>
       </div>
-      
       <div class="mode-card"
           [class.selected]="isLanguageSelected('en')"
           (click)="onLanguageChange('en')">
@@ -29,85 +29,97 @@
     </div>
   </div>
 
+  <!-- Aspetto -->
+  <div class="selection-group">
+    <h2 class="group-title">{{ localizationSvc.translate('Aspetto') }}</h2>
+    <h3 class="group-subtitle">{{ localizationSvc.translate('Scegli lo schema di colori da usare') }}</h3>
+    <div class="mode-selection">
+      <div class="mode-card"
+          [class.selected]="isAspettoSelected('device')"
+          (click)="onAspettoChange('device')">
+        <ion-icon name="phone-portrait" class="mode-icon"></ion-icon>
+        <h3>{{ localizationSvc.translate('Come dispositivo') }}</h3>
+      </div>
+      <div class="mode-card"
+          [class.selected]="isAspettoSelected('battery')"
+          (click)="onAspettoChange('battery')">
+        <ion-icon name="battery-full" class="mode-icon"></ion-icon>
+        <h3>{{ localizationSvc.translate('Risparmio batteria') }}</h3>
+      </div>
+      <div class="mode-card"
+          [class.selected]="isAspettoSelected('night')"
+          (click)="onAspettoChange('night')">
+        <ion-icon name="moon" class="mode-icon"></ion-icon>
+        <h3>{{ localizationSvc.translate('In notturna') }}</h3>
+      </div>
+    </div>
+  </div>
 
-  <ion-list inset="true">
-    <ion-list-header>Lingua/ Language</ion-list-header>
-    <ion-item>
-      <ion-label>Italiano</ion-label>
-      <ion-select [(ngModel)]="settings.language" (ionChange)="onSave()">
-        <ion-select-option value="it">Italiano</ion-select-option>
-        <ion-select-option value="en">English</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+  <!-- Carattere -->
+  <div class="selection-group">
+    <h2 class="group-title">{{ localizationSvc.translate('Carattere') }}</h2>
+    <h3 class="group-subtitle">{{ localizationSvc.translate('Cambia il tipo di carattere') }}</h3>
+    <div class="mode-selection">
+      <div class="mode-card"
+          [class.selected]="isFontSelected('Orbitron')"
+          (click)="onFontChange('Orbitron')">
+        <h3>{{ localizationSvc.translate('Tecnico') }}</h3>
+      </div>
+      <div class="mode-card"
+          [class.selected]="isFontSelected('JetBrains Mono')"
+          (click)="onFontChange('JetBrains Mono')">
+        <h3>{{ localizationSvc.translate('Arrotondato') }}</h3>
+      </div>
+    </div>
+  </div>
+
+    <!-- stile -->
+  <div class="selection-group">
+    <h2 class="group-title">{{ localizationSvc.translate('Design') }}</h2>
+    <h3 class="group-subtitle">{{ localizationSvc.translate('Stile degli strumenti') }}</h3>
+    <div class="mode-selection">
+      <div class="mode-card"
+          [class.selected]="isInstrumentStyleSelected('versione3')"
+          (click)="onInstrumentStyleChange('versione3')">
+        <h3>{{ localizationSvc.translate('Arrotondato') }}</h3>
+      </div>
+      <div class="mode-card"
+          [class.selected]="isInstrumentStyleSelected('versione4')"
+          (click)="onInstrumentStyleChange('versione4')">
+        <h3>{{ localizationSvc.translate('Squadrato') }}</h3>
+      </div>
+    </div>
+  </div>
 
 
-
-  <ion-list inset="true">
-    <ion-list-header>Aspetto</ion-list-header>
-
-    <ion-item>
-      <ion-label>Tema</ion-label>
-      <ion-select [(ngModel)]="settings.theme" (ionChange)="onSave()">
-        <ion-select-option value="battery">battery</ion-select-option>
-        <ion-select-option value="night">night</ion-select-option>
-        <ion-select-option value="device">device</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Lingua</ion-label>
-      <ion-select [(ngModel)]="settings.language" (ionChange)="onSave()">
-        <ion-select-option value="it">Italiano</ion-select-option>
-        <ion-select-option value="en">English</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Font</ion-label>
-      <ion-select [(ngModel)]="settings.fontFamily" (ionChange)="onSave()">
-        <ion-select-option value="Orbitron">Orbitron</ion-select-option>
-        <ion-select-option value="JetBrains Mono">JetBrains Mono</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Stile Dashboard</ion-label>
-      <ion-select [(ngModel)]="settings.styleVersion" (ionChange)="onSave()">
-        <ion-select-option value="versione3">Versione 3 (Rounded)</ion-select-option>
-        <ion-select-option value="versione4">Versione 4 (Modern)</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-
-  <ion-list inset="true">
-    <ion-list-header>Notifiche</ion-list-header>
-
-    <ion-item>
-      <ion-label>Notifiche push</ion-label>
-      <ion-toggle [(ngModel)]="dummynotifications"
-                  >
-      </ion-toggle>
-    </ion-item>
-
-  </ion-list>
-
-  <ion-list inset="true">
-    <ion-list-header>Orario</ion-list-header>
-
-    <ion-item>
-      <ion-label>Formato Orario</ion-label>
-      <ion-select [(ngModel)]="settings.timeFormat" (ionChange)="onSave()">
-        <ion-select-option value="local">Locale (Dispositivo)</ion-select-option>
-        <ion-select-option value="utc">UTC</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Mostra Secondi</ion-label>
-      <ion-toggle [(ngModel)]="settings.showSeconds" (ionChange)="onSave()">
-      </ion-toggle>
-    </ion-item>
-
-  </ion-list>
+  <!-- Orario -->
+  <div class="selection-group">
+    <h2 class="group-title">{{ localizationSvc.translate('Impostazioni orario') }}</h2>
+    <h3 class="group-subtitle">{{ localizationSvc.translate('Scegli tra ora locale ed UTC') }}</h3>
+    <div class="mode-selection">
+      <div class="mode-card"
+          [class.selected]="isFusocSelected('local')"
+          (click)="onFusocChange('local')">
+        <ion-icon name="pin" class="mode-icon"></ion-icon>
+        <h3>{{ localizationSvc.translate('ora locale') }}</h3>
+      </div>
+      <div class="mode-card"
+          [class.selected]="isFusocSelected('utc')"
+          (click)="onFusocChange('utc')">
+        <ion-icon name="globe" class="mode-icon"></ion-icon>
+        <h3>{{ localizationSvc.translate('UTC') }}</h3>
+      </div>
+      <h3 class="group-subtitle"><br/>{{ localizationSvc.translate('Scegli il formato orario') }}</h3>
+      <div class="mode-card"
+          [class.selected]="isShowSecondsSelected(false)"
+          (click)="onShowSecondsChange(false)">
+        <h3>hh:mm</h3>
+      </div>
+      <div class="mode-card"
+          [class.selected]="isShowSecondsSelected(true)"
+          (click)="onShowSecondsChange(true)">
+        <h3>hh:mm:ss</h3>
+      </div>
+    </div>
+  </div>
 </ion-content>

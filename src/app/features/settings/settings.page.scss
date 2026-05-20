@@ -5,7 +5,7 @@
   --padding-end: 16px;
   --padding-top: 16px;
   --padding-bottom: 16px;
-  font-family: 'Orbitron', monospace;
+  
   --ion-card-background: #1a1a1a;
 }
 
@@ -20,9 +20,16 @@
 
 // Titolo del gruppo
 .group-title {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--ion-color-medium);
+  margin-top: 0;
+  margin-bottom: 0px;
+  text-align: center;
+}
+.group-subtitle {
+  font-size: 12px;
   letter-spacing: 2px;
   color: var(--ion-color-medium);
   margin-top: 0;
@@ -46,9 +53,9 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-height: 120px;
+  min-height: 80px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 
@@ -66,8 +73,8 @@
 
 .mode-icon {
   font-size: 32px;
-  margin-bottom: 8px;
   opacity: 0.8;
+  flex: 0 0 30px;
 }
 
 .mode-card.selected .mode-icon {
@@ -77,8 +84,7 @@
 .mode-card h3 {
   font-size: 16px;
   font-weight: 600;
-  margin: 8px 0 4px 0;
-  font-family: 'Orbitron', monospace;
+  flex: 1;
 }
 
 .mode-card p {
@@ -113,7 +119,6 @@
   font-weight: 600;
   text-align: center;
   margin: 0 0 20px 0;
-  font-family: 'Orbitron', monospace;
   color: var(--ion-color-primary);
 }
 
@@ -134,7 +139,6 @@
   font-size: 24px;
   font-weight: 600;
   text-align: center;
-  font-family: 'Orbitron', monospace;
   border: 2px solid var(--ion-color-medium);
   border-radius: 8px;
   min-width: 120px;
@@ -147,7 +151,6 @@
   font-size: 20px;
   font-weight: 600;
   color: var(--ion-color-medium);
-  font-family: 'Orbitron', monospace;
 }
 
 // Pulsanti direzione
@@ -166,7 +169,7 @@
   --padding-end: 16px;
   font-size: 16px;
   font-weight: 600;
-  font-family: 'Orbitron', monospace;
+  
   min-height: 48px;
 }
 
@@ -196,7 +199,7 @@
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--ion-text-color);
-  font-family: 'Orbitron', monospace;
+  
 }
 
 .coord-input-container {
@@ -211,7 +214,7 @@
   --padding-top: 10px;
   --padding-bottom: 10px;
   font-size: 16px;
-  font-family: 'Orbitron', monospace;
+  
   border: 1px solid var(--ion-color-medium);
   border-radius: 6px;
 }
@@ -221,7 +224,7 @@
   right: 10px;
   font-size: 14px;
   color: var(--ion-color-medium);
-  font-family: 'Orbitron', monospace;
+  
 }
 
 .name-input {
@@ -232,7 +235,7 @@
   font-size: 16px;
   border: 1px solid var(--ion-color-medium);
   border-radius: 6px;
-  font-family: 'Orbitron', monospace;
+  
 }
 
 // Bearing calcolato
@@ -246,7 +249,7 @@
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
-  font-family: 'Orbitron', monospace;
+  
   color: var(--ion-color-primary);
 }
 
@@ -266,7 +269,7 @@
   --padding-bottom: 16px;
   font-size: 18px;
   font-weight: 600;
-  font-family: 'Orbitron', monospace;
+  
   min-height: 60px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
